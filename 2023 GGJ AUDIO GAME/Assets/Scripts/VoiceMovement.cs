@@ -19,6 +19,7 @@ public class VoiceMovement : MonoBehaviour
         actions.Add("right", Right);
         actions.Add("left", Left);
         actions.Add("play", Play);
+        actions.Add("fuck", Fuck);
 
         keywordRecognizer = new KeywordRecognizer(actions.Keys.ToArray());
         keywordRecognizer.OnPhraseRecognized += ProcessSpeech;
@@ -64,5 +65,10 @@ public class VoiceMovement : MonoBehaviour
     private void Play()
     {
         Debug.Log("plaay");
+    }
+
+    private void Fuck()
+    {
+        Debug.Log("fuck");
     }
 }
