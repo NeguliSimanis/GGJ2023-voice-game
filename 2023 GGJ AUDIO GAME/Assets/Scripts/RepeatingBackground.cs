@@ -33,11 +33,6 @@ public class RepeatingBackground : MonoBehaviour
         transform.Translate(Vector2.left * speed * Time.deltaTime * GameManager.instance.currSpeedMultiplier);
         if (transform.position.x < minX)
             ReuseBackground();
-
-        //if (transform.position.x <= endX)
-        //{
-        //    InitializeObject(true);
-        //}
     }
 
     /// <summary>

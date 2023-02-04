@@ -37,6 +37,7 @@ public class GameManager : MonoBehaviour
     public List<SpeechTypes> speechToBeDetected = new List<SpeechTypes>();
     public bool isDifficultEnemyAlive = false;
     public Obstacle difficultEnemy;
+    public List<Obstacle> enemies = new List<Obstacle>();
 
     [Header("year")]
     public int currentYear;
@@ -47,6 +48,9 @@ public class GameManager : MonoBehaviour
     public int aristotleEndYear = 1200;
     public int thomasEndYear = 1610;
     public int decartesEndYear = 1860;
+
+    [Header("input")]
+  
 
     public static GameManager instance;
 
@@ -80,6 +84,8 @@ public class GameManager : MonoBehaviour
         isBC = true;
         lastYearUpdateTime = Time.time;
         totalYears = 0;
+
+        enemies.Clear();
     }
 
 
@@ -111,6 +117,7 @@ public class GameManager : MonoBehaviour
         ManageGameSpeed();
         ManageEnemySpawning();
         UpdateCurrentYear();
+            
     }
 
     private void ManageEnemySpawning()
@@ -147,6 +154,7 @@ public class GameManager : MonoBehaviour
     {
         SceneManager.LoadScene(0);
     }
+
 
     private void UpdateCurrentYear()
     {

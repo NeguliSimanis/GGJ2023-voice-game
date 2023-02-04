@@ -47,12 +47,7 @@ public class Player : MonoBehaviour
         }
         mySprites[mySprites.Count - 1].enabled = false;
         mySprites.RemoveAt(mySprites.Count - 1);
-        //foreach(SpriteRenderer sprite in mySprites)
-        //{
-        //    Vector3 oldPos = sprite.gameObject.transform.position;
-        //        sprite.gameObject.transform.position =
-        //        new Vector3(oldPos.x - philoDistance, oldPos.y, oldPos.z);
-        //}
+
         transform.position = new Vector3(transform.position.x - philoDistance, transform.position.y,
             transform.position.z);
     }
