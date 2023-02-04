@@ -31,7 +31,7 @@ public class Player : MonoBehaviour
         newFollowerObject.transform.parent = this.transform;
         mySprites.Add(newSprite);
 
-        if (followerCount > 3)
+        if (followerCount > 2)
             GameManager.instance.managerCamera.ZoomOut();
     }
 
@@ -54,7 +54,7 @@ public class Player : MonoBehaviour
             transform.position.z);
 
 
-        if (followerCount < 3)
+        if (followerCount < 2)
             GameManager.instance.managerCamera.ZoomIn();
     }
 }

@@ -23,10 +23,12 @@ public class Texts : MonoBehaviour
         philosopherTexts.Add("See", 0);
         philosopherTexts.Add("Age", 0);
         philosopherTexts.Add("Atom", 0);
+        philosopherTexts.Add("Punch", 0);
         philosopherTexts.Add("Life", 0);
         philosopherTexts.Add("Case", 0);
         philosopherTexts.Add("Veto", 0);
         philosopherTexts.Add("Birth", 0);
+        philosopherTexts.Add("Global", 0);
         philosopherTexts.Add("Death", 0);
         philosopherTexts.Add("Logic", 0);
         philosopherTexts.Add("World", 0);
@@ -36,8 +38,12 @@ public class Texts : MonoBehaviour
         philosopherTexts.Add("Zoom", 0);
         philosopherTexts.Add("Burden", 0);
         philosopherTexts.Add("Duty", 0);
+
+
+        //
         philosopherTexts.Add("Wealth", 1);
         philosopherTexts.Add("Universe", 1);
+        philosopherTexts.Add("Hello World", 1);
         philosopherTexts.Add("Belief", 1);
         philosopherTexts.Add("Ethics", 1);
         philosopherTexts.Add("Stigma", 1);
@@ -57,6 +63,8 @@ public class Texts : MonoBehaviour
         philosopherTexts.Add("Stoicism", 1);
         philosopherTexts.Add("Humanism", 1);
         philosopherTexts.Add("Humanity", 1);
+
+        //
         philosopherTexts.Add("Ita vero", 2);
         philosopherTexts.Add("Pro bono", 2);
         philosopherTexts.Add("Education", 2);
@@ -73,10 +81,13 @@ public class Texts : MonoBehaviour
         philosopherTexts.Add("Perception", 2);
         philosopherTexts.Add("Ad Hominem", 2);
         philosopherTexts.Add("Ipso Facto", 2);
+
+        //
         philosopherTexts.Add("Magum Opus", 3);
         philosopherTexts.Add("Vox Populis", 3);
         philosopherTexts.Add("Cogito ergo sum", 3);
         philosopherTexts.Add("Curriculum vitae", 3);
+        philosopherTexts.Add("Going back to my roots", 3);
 
         for (int i = 0; i < philosopherTexts.Count; i++)
         {
@@ -96,8 +107,10 @@ public class Texts : MonoBehaviour
 
     public string GetRandomText(int difficulty = 0)
     {
-        string text = "a";
+        string text = "difficulty = " + difficulty;
+        Debug.Log(text);
         int maxRoll = 2;
+        int minRoll = 0;
         switch(difficulty)
         {
             case 0:
@@ -108,12 +121,14 @@ public class Texts : MonoBehaviour
                 break;
             case 2:
                 maxRoll = length2;
+                minRoll = length1;
                 break;
             case 3:
                 maxRoll = length3;
+                minRoll = length2;
                 break;
         }
-        int randomRoll = UnityEngine.Random.Range(0, maxRoll);
+        int randomRoll = UnityEngine.Random.Range(minRoll, maxRoll);
         text = philosopherTexts.Keys.ElementAt(randomRoll);
         return text;
         

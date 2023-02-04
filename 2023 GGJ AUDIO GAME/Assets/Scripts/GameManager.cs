@@ -69,13 +69,13 @@ public class GameManager : MonoBehaviour
         managerCamera = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<ManagerCamera>();
 
         // RESET STATS
-        speedMultiplierPerSecond = 0.0015f;
+        speedMultiplierPerSecond = 0.0005f;
         currSpeedMultiplier = 1f;
-        maxSpeedMultiplier = 3.0f;
+        maxSpeedMultiplier = 6.2f;
         lastSpeedUpdate = 0;
 
         isGameOver = false;
-        nextEnemySpawnTime = Time.time + minEnemySpawnCooldown;
+        nextEnemySpawnTime = Time.time + 0.2f;
         lastSpeedUpdate = Time.time;
         currPhilosphers = 1;
 
@@ -161,9 +161,9 @@ public class GameManager : MonoBehaviour
     {
         float yearSpeedMultiplier = yearUpdateInterval / currSpeedMultiplier;
         if (currentYear < aristotleEndYear)
-            yearSpeedMultiplier = yearSpeedMultiplier/8;
+            yearSpeedMultiplier = yearSpeedMultiplier/10;
         else if (currentYear < thomasEndYear)
-            yearSpeedMultiplier = yearSpeedMultiplier/2;
+            yearSpeedMultiplier = yearSpeedMultiplier/4;
         if (Time.time < lastYearUpdateTime + yearSpeedMultiplier)
             return;
         lastYearUpdateTime = Time.time;
@@ -198,12 +198,10 @@ public class GameManager : MonoBehaviour
         if (Input.GetKeyDown(key: KeyCode.A))
         {
             inputString += "a";
-            Debug.Log("a");
         }
         else if (Input.GetKeyDown(key: KeyCode.B))
         { 
             inputString += "b";
-        Debug.Log("a");
         }
         else if (Input.GetKeyDown(key: KeyCode.C))
             inputString += "c";
