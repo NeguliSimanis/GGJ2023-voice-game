@@ -37,7 +37,7 @@ public class ManagerUI : MonoBehaviour
     {
         mainMenu.SetActive(false);
         GameManager.instance.StartGame();
-       
+
     }
 
     public void RestartGame()
@@ -48,7 +48,7 @@ public class ManagerUI : MonoBehaviour
     public void ShowGameOverScreen()
     {
         gameOverMenu.SetActive(true);
-        endGameTotalYears.text = "It lasted for " + GameManager.instance.totalYears.ToString() + " years";
+        endGameTotalYears.text = "It lasted for " + GameManager.instance.GetCurrentYear().ToString() + " years";
     }
 
     public void UpdatePhilosopherCount()
@@ -58,10 +58,8 @@ public class ManagerUI : MonoBehaviour
 
     public void UpdateYearText()
     {
-        string affix = "BC";
-        if (!GameManager.instance.isBC)
-            affix = "AD";
-        yearText.text = GameManager.instance.currentYear.ToString() + " " + affix;
+        string affix = GameManager.instance.GetCurrentYear() > 0 ? "AD" : "BC";
+        yearText.text = GameManager.instance.GetCurrentYear().ToString("#0") + affix;
     }
 }
 
