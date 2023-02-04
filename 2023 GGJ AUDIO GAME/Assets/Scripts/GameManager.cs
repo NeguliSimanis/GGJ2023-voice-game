@@ -66,7 +66,7 @@ public class GameManager : MonoBehaviour
     {
         currPlayer = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
         managerUI = GameObject.FindGameObjectWithTag("ManagerOther").GetComponent<ManagerUI>();
-        managerCamera = GameObject.FindGameObjectWithTag("Camera").GetComponent<ManagerCamera>();
+        managerCamera = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<ManagerCamera>();
 
         // RESET STATS
         speedMultiplierPerSecond = 0.0015f;
@@ -161,7 +161,7 @@ public class GameManager : MonoBehaviour
     {
         float yearSpeedMultiplier = yearUpdateInterval / currSpeedMultiplier;
         if (currentYear < aristotleEndYear)
-            yearSpeedMultiplier = yearSpeedMultiplier/4;
+            yearSpeedMultiplier = yearSpeedMultiplier/8;
         else if (currentYear < thomasEndYear)
             yearSpeedMultiplier = yearSpeedMultiplier/2;
         if (Time.time < lastYearUpdateTime + yearSpeedMultiplier)

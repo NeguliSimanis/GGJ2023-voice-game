@@ -25,12 +25,14 @@ public class Player : MonoBehaviour
         gameObject.transform.position = new Vector3(transform.position.x + philoDistance,
             transform.position.y, transform.position.z);
         GameObject newFollowerObject = Instantiate(mainSprite.gameObject);
-        //newFollowerObject.transform.parent = this.transform;
         SpriteRenderer newSprite = newFollowerObject.GetComponent<SpriteRenderer>();
         newSprite.sprite = philosopherSprite;
         newFollowerObject.transform.position = new Vector3(-7.07f - ((followerCount) * philoDistance), -2.82f, 0);
         newFollowerObject.transform.parent = this.transform;
         mySprites.Add(newSprite);
+
+        if (followerCount > 3)
+            GameManager.instance.managerCamera.ZoomOut();
     }
 
     public void RemovePhilosopher()
@@ -50,5 +52,9 @@ public class Player : MonoBehaviour
 
         transform.position = new Vector3(transform.position.x - philoDistance, transform.position.y,
             transform.position.z);
+
+
+        if (followerCount < 3)
+            GameManager.instance.managerCamera.ZoomIn();
     }
 }
