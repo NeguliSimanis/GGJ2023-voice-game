@@ -55,7 +55,7 @@ public class Obstacle : MonoBehaviour
     private void Start()
     {
         player = GameManager.instance.currPlayer;
-        myText.text = GameManager.instance.texts.GetRandomText(difficulty: GameManager.instance.difficulty);
+        myText.text = GameManager.instance.texts.GetRandomText(difficulty: GameManager.instance.difficulty).ToUpper();
         InitializeEnemy();
     }
 
@@ -126,7 +126,6 @@ public class Obstacle : MonoBehaviour
 
         }
     }
-
 
 
     public void ProcessDeath(ObstacleDeath death)
