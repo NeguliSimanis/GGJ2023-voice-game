@@ -11,7 +11,7 @@ public class Texts : MonoBehaviour
     int length1;
     int length2;
     int length3;
-   
+
     void Awake()
     {
         philosopherTexts.Add("No", 0);
@@ -111,7 +111,7 @@ public class Texts : MonoBehaviour
         Debug.Log(text);
         int maxRoll = 2;
         int minRoll = 0;
-        switch(difficulty)
+        switch (difficulty)
         {
             case 0:
                 maxRoll = length0;
@@ -130,8 +130,8 @@ public class Texts : MonoBehaviour
         }
         int randomRoll = UnityEngine.Random.Range(minRoll, maxRoll);
         text = philosopherTexts.Keys.ElementAt(randomRoll);
-        return text;
-        
+        return text.ToUpper();
+
     }
-    
+
 }

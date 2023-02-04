@@ -82,6 +82,7 @@ public class GameManager : MonoBehaviour
 
         enemies.Clear();
         difficulty = 0;
+        playtime = 0;
     }
 
 

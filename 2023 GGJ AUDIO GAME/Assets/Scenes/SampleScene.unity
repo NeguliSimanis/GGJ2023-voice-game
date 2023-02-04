@@ -5558,7 +5558,7 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  maxPlaytime: 600
+  maxPlaytime: 1200
   minYears: -350
   maxYears: 10000
   difficulty: 0
