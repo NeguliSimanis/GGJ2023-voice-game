@@ -10,5 +10,6 @@ public enum Philosopher
     Aristotle,
     Thomas,
     Decartes,
-    Nietszche
+    Nietszche,
+    Default
 }

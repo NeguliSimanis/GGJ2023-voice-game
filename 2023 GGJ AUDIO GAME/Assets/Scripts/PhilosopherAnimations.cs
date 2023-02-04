@@ -39,10 +39,16 @@ public class PhilosopherAnimations : MonoBehaviour
                 nietzsche.SetActive(false);
                 break;
             case Philosopher.Nietszche:
-                aristotle.SetActive(true);
+                aristotle.SetActive(false);
                 thomas.SetActive(false);
                 descartes.SetActive(false);
                 nietzsche.SetActive(true);
+                break;
+            case Philosopher.Default:
+                aristotle.SetActive(false);
+                thomas.SetActive(false);
+                descartes.SetActive(false);
+                nietzsche.SetActive(false);
                 break;
         }
     }

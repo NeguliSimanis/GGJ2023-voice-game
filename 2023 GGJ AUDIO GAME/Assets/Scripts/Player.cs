@@ -6,9 +6,11 @@ public class Player : MonoBehaviour
 {
     public bool isActive = false;
     public SpriteRenderer mainSprite;
-    private List<SpriteRenderer> mySprites = new List<SpriteRenderer>();
+    private List<PhilosopherAnimations> myFollowerAnimations = new List<PhilosopherAnimations>();
     [SerializeField]
-    private GameObject followerObject;
+    private PhilosopherAnimations myAnimations;
+    [SerializeField]
+    private GameObject followerPrefab;
 
     private float philoDistance = 1f;
     private float followerDistance = 2f;
@@ -16,20 +18,24 @@ public class Player : MonoBehaviour
 
     private void Start()
     {
-        mySprites.Add(mainSprite);
+        myFollowerAnimations.Add(myAnimations);
     }
 
-    public void AddPhilosopher(Sprite philosopherSprite)
+    public void AddPhilosopher(Philosopher philosopher)
     {
         followerCount++;
+
+        // my transform
         gameObject.transform.position = new Vector3(transform.position.x + philoDistance,
             transform.position.y, transform.position.z);
-        GameObject newFollowerObject = Instantiate(mainSprite.gameObject);
-        SpriteRenderer newSprite = newFollowerObject.GetComponent<SpriteRenderer>();
-        newSprite.sprite = philosopherSprite;
+
+        // other sprites
+        GameObject newFollowerObject = Instantiate(followerPrefab.gameObject);
+        PhilosopherAnimations newAnimations = newFollowerObject.GetComponent<PhilosopherAnimations>();
+        newAnimations.ChangePhilosopher(philosopher);
         newFollowerObject.transform.position = new Vector3(-7.07f - ((followerCount) * philoDistance), -2.82f, 0);
         newFollowerObject.transform.parent = this.transform;
-        mySprites.Add(newSprite);
+        myFollowerAnimations.Add(newAnimations);
 
         if (followerCount > 2)
             GameManager.instance.managerCamera.ZoomOut();
@@ -40,15 +46,17 @@ public class Player : MonoBehaviour
         if (followerCount < 1)
             return;
         followerCount--;
-        for (int i = 0; i < mySprites.Count; i++)
+        for (int i = 0; i < myFollowerAnimations.Count; i++)
         {
-            if (i + 1 < mySprites.Count)
+            if (i + 1 < myFollowerAnimations.Count)
             {
-                mySprites[i].sprite = mySprites[i + 1].sprite;
+                myFollowerAnimations[i].ChangePhilosopher(myFollowerAnimations[i + 1].philosopher);
             }
         }
-        mySprites[mySprites.Count - 1].enabled = false;
-        mySprites.RemoveAt(mySprites.Count - 1);
+        PhilosopherAnimations animationsToDelete = myFollowerAnimations[myFollowerAnimations.Count - 1];
+        animationsToDelete.ChangePhilosopher(Philosopher.Default);
+        myFollowerAnimations.Remove(animationsToDelete);
+        Destroy(animationsToDelete.gameObject);
 
         transform.position = new Vector3(transform.position.x - philoDistance, transform.position.y,
             transform.position.z);
