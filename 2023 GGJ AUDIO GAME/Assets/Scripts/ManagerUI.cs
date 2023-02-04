@@ -48,7 +48,7 @@ public class ManagerUI : MonoBehaviour
     public void ShowGameOverScreen()
     {
         gameOverMenu.SetActive(true);
-        endGameTotalYears.text = "It lasted for " + GameManager.instance.GetCurrentYear().ToString() + " years";
+        endGameTotalYears.text = "It lasted for " + GameManager.instance.GetCurrentYear().ToString("#0") + " years";
     }
 
     public void UpdatePhilosopherCount()
