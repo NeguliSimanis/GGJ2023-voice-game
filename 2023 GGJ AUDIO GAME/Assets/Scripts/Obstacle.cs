@@ -33,7 +33,8 @@ public class Obstacle : MonoBehaviour
 
     [Header("VISUAL")]
     [SerializeField] public TextMeshProUGUI myText;
-    [SerializeField] private SpriteRenderer mySprite;
+    [SerializeField] private PhilosopherAnimations myAnimations;
+    private Philosopher myPhilosopher = Philosopher.Aristotle;
 
     [Header("voic recog")]
     public bool isDifficultEnemy;
@@ -63,19 +64,23 @@ public class Obstacle : MonoBehaviour
         int year = (int)GameManager.instance.GetCurrentYear();
         if (year < GameManager.instance.aristotleEndYear)
         {
-            mySprite.sprite = aristotle;
+            myAnimations.ChangePhilosopher(Philosopher.Aristotle);
+            myPhilosopher = Philosopher.Aristotle;
         }
         else if (year < GameManager.instance.thomasEndYear)
         {
-            mySprite.sprite = thomasSprite;
+            myAnimations.ChangePhilosopher(Philosopher.Thomas);
+            myPhilosopher = Philosopher.Thomas;
         }
         else if (year < GameManager.instance.decartesEndYear)
         {
-            mySprite.sprite = decartes;
+            myAnimations.ChangePhilosopher(Philosopher.Decartes);
+            myPhilosopher = Philosopher.Decartes;
         }
         else
         {
-            mySprite.sprite = nietszsche;
+            myAnimations.ChangePhilosopher(Philosopher.Nietszche);
+            myPhilosopher = Philosopher.Nietszche;
         }
     }
 
@@ -141,9 +146,9 @@ public class Obstacle : MonoBehaviour
         }
         if (death == ObstacleDeath.PunchedByPlayer)
         {
-            mySprite.enabled = false;
+            myAnimations.enabled = false;
             myText.color = Color.green;
-            GameManager.instance.currPlayer.AddPhilosopher(mySprite.sprite);
+            GameManager.instance.currPlayer.AddPhilosopher(myPhilosopher);
             GameManager.instance.AddPhilosopher(1);
             die = DieAfterSeconds(0.9f);
             StartCoroutine(die);
@@ -152,9 +157,9 @@ public class Obstacle : MonoBehaviour
         {
             audioText.color = Color.green;
             myText.enabled = false;
-            mySprite.enabled = false;
+            myAnimations.enabled = false;
             GameManager.instance.AddPhilosopher(1);
-            GameManager.instance.currPlayer.AddPhilosopher(mySprite.sprite);
+            GameManager.instance.currPlayer.AddPhilosopher(myPhilosopher);
             die = DieAfterSeconds(0.9f);
             StartCoroutine(die);
         }
