@@ -114,6 +114,7 @@ public class GameManager : MonoBehaviour
         ManageEnemySpawning();
         UpdatePlaytime();
         ListenToPlayerInput();
+        UpdateDifficulty();
     }
 
     private void ManageEnemySpawning()

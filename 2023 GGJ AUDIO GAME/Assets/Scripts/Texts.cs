@@ -125,7 +125,7 @@ public class Texts : MonoBehaviour
                 break;
             case 3:
                 maxRoll = length3;
-                minRoll = length2;
+                minRoll = length1;
                 break;
         }
         int randomRoll = UnityEngine.Random.Range(minRoll, maxRoll);

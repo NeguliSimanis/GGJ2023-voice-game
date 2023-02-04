@@ -135,6 +135,7 @@ public class Obstacle : MonoBehaviour
             return;
         isDead = true;
         IEnumerator die = DieAfterSeconds();
+        myAnimations.ChangePhilosopher(Philosopher.Default);
         if (death == ObstacleDeath.PunchedByPlayer ||
             death == ObstacleDeath.RecruitedByPlayer)
             canHurtPlayer = false;
