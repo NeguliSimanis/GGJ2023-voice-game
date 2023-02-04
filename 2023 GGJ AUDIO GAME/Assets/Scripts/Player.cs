@@ -37,7 +37,7 @@ public class Player : MonoBehaviour
         newFollowerObject.transform.parent = this.transform;
         myFollowerAnimations.Add(newAnimations);
 
-        if (followerCount > 2)
+        if (followerCount > 0)
             GameManager.instance.managerCamera.ZoomOut();
     }
 
@@ -62,7 +62,7 @@ public class Player : MonoBehaviour
             transform.position.z);
 
 
-        if (followerCount < 2)
+        if (followerCount >= 0)
             GameManager.instance.managerCamera.ZoomIn();
     }
 }

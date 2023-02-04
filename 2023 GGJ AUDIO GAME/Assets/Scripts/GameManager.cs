@@ -275,8 +275,8 @@ public class GameManager : MonoBehaviour
 
     void UpdateDifficulty()
     {
-        difficulty = 3;
-        return;
+        // difficulty = 3;
+        // return;
         int year = (int)this.GetCurrentYear();
         if (year < aristotleEndYear)
         {

@@ -4,61 +4,39 @@ using UnityEngine;
 
 public class ManagerCamera : MonoBehaviour
 {
+    public const float ZOOM_PER_LEVEL = 0.5f;
     public int zoomLevel = 0;
-    /// <summary>
-    /// -1 zooming in +1 zooming out, 0 nothing
-    /// </summary>
-    public int isZoomingOut = 0; 
-    private Camera thisCamera;
+    public int isZoomingOut = 0;
+    private Camera mainCamera;
 
     private float defaultCameraSize;
     [SerializeField]
-    private float bigCameraSize;
-    private float currCameraSize;
-
-    private Vector3 defaultCameraPos;
-    [SerializeField]
-    private Vector3 bigCameraPos;
-    private Vector3 currCameraPos;
+    private float cameraSize;
 
     private void Start()
     {
-        thisCamera = gameObject.GetComponent<Camera>();
-        defaultCameraSize = thisCamera.orthographicSize;
-        defaultCameraPos = new Vector3(transform.position.x, transform.position.y, transform.position.z);
-        currCameraSize = defaultCameraSize;
-        currCameraPos = defaultCameraPos;
+        mainCamera = Camera.main;
+        defaultCameraSize = mainCamera.orthographicSize;
+        cameraSize = defaultCameraSize;
     }
 
     public void ZoomOut()
     {
-        if (zoomLevel > 0)
-            return;
         zoomLevel++;
-        IEnumerator zoom = ChangeZoom(
-            startSize: defaultCameraSize,
-            bigCameraSize,
-            bigCameraPos, startPos: new Vector3(defaultCameraPos.x, defaultCameraPos.y, defaultCameraPos.x));
+        IEnumerator zoom = ChangeZoom(defaultCameraSize + ZOOM_PER_LEVEL * zoomLevel);
         StartCoroutine(zoom);
     }
     public void ZoomIn()
     {
-        if (zoomLevel <= 0)
-        {
-            return;
-        }
         zoomLevel--;
-        IEnumerator zoom = ChangeZoom(bigCameraSize, defaultCameraSize, 
-            defaultCameraPos,
-            startPos: new Vector3(bigCameraPos.x, bigCameraPos.y, defaultCameraPos.x));
+        Debug.Log("Zooming in");
+        IEnumerator zoom = ChangeZoom(defaultCameraSize + ZOOM_PER_LEVEL * zoomLevel);
         StartCoroutine(zoom);
     }
 
-    public IEnumerator ChangeZoom(float startSize,
-        float targetCameraSize, Vector3 targetCameraPosition, Vector3 startPos)
+    public IEnumerator ChangeZoom(float targetCameraSize)
     {
-        Debug.Log("ye");
-        if (targetCameraSize > currCameraSize)
+        if (targetCameraSize > cameraSize)
         {
             isZoomingOut = 1;
         }
@@ -69,29 +47,13 @@ public class ManagerCamera : MonoBehaviour
         //zoom out
         float currentTime = 0;
         float zoomDuration = 1.4f;
-       // float zoomEndTime = currentTime + zoomDuration;
-        float startCameraSize = currCameraSize;
-        float startCameraX = currCameraPos.x;
-        float startCameraY = currCameraPos.y;
+
+        float startCameraSize = cameraSize;
         while (currentTime < zoomDuration)
         {
             currentTime += Time.deltaTime;
-            //Debug.Log("auafsaff");
-            //if (isZoomingOut == 1 && targetCameraSize < currCameraSize)
-            //    break;
-            //if (isZoomingOut == -1 && targetCameraSize > currCameraSize)
-            //    break;
-
-            // size
-            thisCamera.orthographicSize = Mathf.Lerp(startCameraSize, targetCameraSize, currentTime / zoomDuration);
-            currCameraSize = thisCamera.orthographicSize;
-
-            // position
-            transform.position = new Vector3(
-                Mathf.Lerp(startPos.x, targetCameraPosition.x, currentTime / zoomDuration),
-                Mathf.Lerp(startPos.y, targetCameraPosition.y, currentTime / zoomDuration),
-                targetCameraPosition.z);
-            currCameraPos = transform.position;
+            mainCamera.orthographicSize = Mathf.Lerp(startCameraSize, targetCameraSize, currentTime / zoomDuration);
+            cameraSize = mainCamera.orthographicSize;
 
             yield return null;
         }
