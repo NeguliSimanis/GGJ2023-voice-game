@@ -10,9 +10,40 @@ public class ManagerUI : MonoBehaviour
     [SerializeField]
     TextMeshProUGUI philosopherCountText;
 
+    // GAMEOVER
+    [Header("game over menu")]
+    [SerializeField] GameObject gameOverMenu;
+    [SerializeField] Button restartButton;
+
+    //Main menu
+    [Header("MAIN MENU")]
+    [SerializeField] GameObject mainMenu;
+    [SerializeField] Button startButton;
+
     void Start()
     {
         player = GameManager.instance.currPlayer;
+        gameOverMenu.SetActive(false);
+        mainMenu.SetActive(true);
+        restartButton.onClick.AddListener(RestartGame);
+        startButton.onClick.AddListener(StartGame);
+    }
+
+    public void StartGame()
+    {
+        mainMenu.SetActive(false);
+        GameManager.instance.StartGame();
+       
+    }
+
+    public void RestartGame()
+    {
+        GameManager.instance.RestartGame();
+    }
+
+    public void ShowGameOverScreen()
+    {
+        gameOverMenu.SetActive(true);
     }
 
     public void UpdatePhilosopherCount()
@@ -20,3 +51,4 @@ public class ManagerUI : MonoBehaviour
         philosopherCountText.text = "Philosophers: " + GameManager.instance.currPhilosphers.ToString();
     }
 }
+

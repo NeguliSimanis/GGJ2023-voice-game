@@ -28,7 +28,7 @@ public class RepeatingBackground : MonoBehaviour
         //InitializeObject(false);
     }
 
-    private void Update()
+    private void FixedUpdate()
     {
         transform.Translate(Vector2.left * speed * Time.deltaTime * GameManager.instance.currSpeedMultiplier);
         if (transform.position.x < minX)
