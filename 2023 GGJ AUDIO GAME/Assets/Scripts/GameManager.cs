@@ -11,6 +11,7 @@ public class GameManager : MonoBehaviour
     // UI
     [Header("Managers")]
     public ManagerUI managerUI;
+    public ManagerCamera managerCamera;
 
     // Player stats
     [Header("player")]
@@ -50,9 +51,6 @@ public class GameManager : MonoBehaviour
     public int thomasEndYear = 1610;
     public int decartesEndYear = 1860;
 
-    [Header("input")]
-  
-
     public static GameManager instance;
 
     private void Awake()
@@ -68,6 +66,7 @@ public class GameManager : MonoBehaviour
     {
         currPlayer = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
         managerUI = GameObject.FindGameObjectWithTag("ManagerOther").GetComponent<ManagerUI>();
+        managerCamera = GameObject.FindGameObjectWithTag("Camera").GetComponent<ManagerCamera>();
 
         // RESET STATS
         speedMultiplierPerSecond = 0.0015f;
@@ -87,7 +86,6 @@ public class GameManager : MonoBehaviour
         totalYears = 0;
 
         enemies.Clear();
-
         difficulty = 0;
     }
 
