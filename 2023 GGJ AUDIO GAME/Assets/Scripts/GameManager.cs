@@ -18,6 +18,7 @@ public class GameManager : MonoBehaviour
     [Header("Managers")]
     public ManagerUI managerUI;
     public ManagerCamera managerCamera;
+    public ManagerAudio managerAudio;
 
     // Player stats
     [Header("player")]
@@ -65,7 +66,9 @@ public class GameManager : MonoBehaviour
     public void StartGame()
     {
         currPlayer = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
-        managerUI = GameObject.FindGameObjectWithTag("ManagerOther").GetComponent<ManagerUI>();
+        GameObject otherManagers = GameObject.FindGameObjectWithTag("ManagerOther");
+        managerUI = otherManagers.GetComponent<ManagerUI>();
+        managerAudio = otherManagers.GetComponent<ManagerAudio>();
         managerCamera = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<ManagerCamera>();
 
         // RESET STATS
@@ -235,11 +238,6 @@ public class GameManager : MonoBehaviour
             inputString += "z";
         else if (Input.GetKeyDown(key: KeyCode.Space))
             inputString += " ";
-        //if (Input.inputString.ToUpper() == myText.text)
-        // {
-        //     canHurtPlayer = false;
-        //     ProcessDeath(ObstacleDeath.PunchedByPlayer);
-        // }
 
         if (inputString == nextChar.ToLower())
         {
@@ -247,8 +245,8 @@ public class GameManager : MonoBehaviour
             enemies[0].audioText.gameObject.SetActive(true);
             enemies[0].audioText.color = Color.green;
             enemies[0].audioText.text = enemies[0].wordTyped;
-
             enemies[0].lettersTyped++;
+            managerAudio.PlaySuccessSFX();
 
             if (enemies[0].lettersTyped >= requiredText.Length
                 || enemies[0].wordTyped == requiredText.ToLower())
@@ -257,6 +255,10 @@ public class GameManager : MonoBehaviour
                 enemies[0].canHurtPlayer = false;
                 enemies[0].ProcessDeath(ObstacleDeath.PunchedByPlayer);
             }
+        }
+        else if (inputString != null)
+        {
+            managerAudio.PlayFailSFX();
         }
     }
 

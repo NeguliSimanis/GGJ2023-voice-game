@@ -4,15 +4,22 @@ using UnityEngine;
 
 public class ManagerAudio : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    [SerializeField]
+    AudioSource audioSource;
+    [SerializeField]
+    AudioClip failSFX;
+    [SerializeField]
+    AudioClip inputSuccessSFX;
+
+    public void PlaySuccessSFX()
     {
-        
+        audioSource.PlayOneShot(inputSuccessSFX, 1f);
+        Debug.Log("succ");
     }
 
-    // Update is called once per frame
-    void Update()
+    public void PlayFailSFX()
     {
-        
+        Debug.Log("suck");
+        audioSource.PlayOneShot(failSFX, volumeScale: 0.2f);
     }
 }
