@@ -20,6 +20,10 @@ public class ManagerUI : MonoBehaviour
     [SerializeField] GameObject mainMenu;
     [SerializeField] Button startButton;
 
+    [Header("YEAR")]
+    [SerializeField] TextMeshProUGUI yearText;
+    [SerializeField] TextMeshProUGUI endGameTotalYears;
+
     void Start()
     {
         player = GameManager.instance.currPlayer;
@@ -44,11 +48,20 @@ public class ManagerUI : MonoBehaviour
     public void ShowGameOverScreen()
     {
         gameOverMenu.SetActive(true);
+        endGameTotalYears.text = "It lasted for " + GameManager.instance.totalYears.ToString() + " years";
     }
 
     public void UpdatePhilosopherCount()
     {
         philosopherCountText.text = "Philosophers: " + GameManager.instance.currPhilosphers.ToString();
+    }
+
+    public void UpdateYearText()
+    {
+        string affix = "BC";
+        if (!GameManager.instance.isBC)
+            affix = "AD";
+        yearText.text = GameManager.instance.currentYear.ToString() + " " + affix;
     }
 }
 

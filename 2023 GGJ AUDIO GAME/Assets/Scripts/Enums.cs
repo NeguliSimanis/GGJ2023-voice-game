@@ -4,3 +4,11 @@ public enum ObstacleDeath
     MissedByPlayer,
     RecruitedByPlayer
 }
+
+public enum Philosopher
+{
+    Aristotle,
+    Thomas,
+    Decartes,
+    Nietszche
+}

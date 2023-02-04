@@ -43,11 +43,6 @@ public class Player : MonoBehaviour
             if (i + 1 < mySprites.Count)
             {
                 mySprites[i].sprite = mySprites[i + 1].sprite;
-
-                // change pos
-                Vector3 oldPos = mySprites[i].gameObject.transform.position;
-                mySprites[i].gameObject.transform.position = 
-                    new Vector3(oldPos.x - philoDistance, oldPos.y, oldPos.z);
             }
         }
         mySprites[mySprites.Count - 1].enabled = false;
@@ -58,7 +53,7 @@ public class Player : MonoBehaviour
         //        sprite.gameObject.transform.position =
         //        new Vector3(oldPos.x - philoDistance, oldPos.y, oldPos.z);
         //}
-        transform.position = new Vector3(transform.position.x + philoDistance, transform.position.y,
+        transform.position = new Vector3(transform.position.x - philoDistance, transform.position.y,
             transform.position.z);
     }
 }

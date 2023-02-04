@@ -369,7 +369,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isActive: 0
-  mainSprite: {fileID: 0}
+  mainSprite: {fileID: 7124634762530341684}
   followerObject: {fileID: 0}
 --- !u!114 &7124634764026871834
 MonoBehaviour:
@@ -392,9 +392,13 @@ MonoBehaviour:
   colliderPlayerHandicap: 2
   myText: {fileID: 7124634764250010712}
   mySprite: {fileID: 7124634762530341684}
-  isAudioEnemy: 0
+  isDifficultEnemy: 0
   audioText: {fileID: 2620642752966913280}
   mySpeechType: 0
+  aristotle: {fileID: 21300000, guid: e98c65aadad76274db6c594d43a6fefb, type: 3}
+  thomasSprite: {fileID: 21300000, guid: 571bb4cd56829b948ba4b589af8c33f6, type: 3}
+  decartes: {fileID: 21300000, guid: 69ca4b5a59852ad4fa69873f2c9c8bf5, type: 3}
+  nietszsche: {fileID: 21300000, guid: 7adb9ff0539e2e94086427dc53f1037b, type: 3}
 --- !u!1 &7124634764250010718
 GameObject:
   m_ObjectHideFlags: 0

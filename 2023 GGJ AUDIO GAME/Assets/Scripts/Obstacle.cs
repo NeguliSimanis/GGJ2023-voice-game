@@ -35,31 +35,59 @@ public class Obstacle : MonoBehaviour
     [SerializeField] private SpriteRenderer mySprite;
 
     [Header("voic recog")]
-    public bool isAudioEnemy;
+    public bool isDifficultEnemy;
     [SerializeField] private TextMeshProUGUI audioText;
     public SpeechTypes mySpeechType = SpeechTypes.Join;
+
+    [Header("PHILOSOPHERS")]
+    [SerializeField] Sprite aristotle;
+    [SerializeField] Sprite thomasSprite;
+    [SerializeField] Sprite decartes;
+    [SerializeField] Sprite nietszsche;
+    public Dictionary<int, Philosopher> philosopherRequirements;
 
     private void Start()
     {
         player = GameManager.instance.currPlayer;
         myText.text = GameManager.instance.texts.GetRandomText(difficulty: 0).ToUpper();
-
         InitializeEnemy();
+    }
 
+    private void SetMySprite()
+    {
+         int year = GameManager.instance.currentYear;
+        if (year < GameManager.instance.aristotleEndYear)
+        {
+            mySprite.sprite = aristotle;
+        }
+        else if (year < GameManager.instance.thomasEndYear)
+        {
+            mySprite.sprite = thomasSprite;
+        }
+        else if (year < GameManager.instance.decartesEndYear)
+        {
+            mySprite.sprite = decartes;
+        }
+        else
+        {
+            mySprite.sprite = nietszsche;
+        }
     }
 
     public void InitializeEnemy()
     {
-        if (!isAudioEnemy)
-        {
-            audioText.gameObject.SetActive(false);
-        }
-        else
-        {
-            audioText.text = "Say: trust!";
-            GameManager.instance.speechToBeDetected.Add(mySpeechType);
-            //  actions.Add("Join", Join);
-        }
+        audioText.gameObject.SetActive(false);
+        SetMySprite();
+        //if (!isAudioEnemy)
+        //{
+        //    audioText.gameObject.SetActive(false);
+        //}
+        //else
+        //{
+        //    audioText.text = "Say: trust!";
+        //    GameManager.instance.speechToBeDetected.Add(mySpeechType);
+        //    //  actions.Add("Join", Join);
+        //}
     }
 
     // Update is called once per frame
@@ -157,7 +185,7 @@ public class Obstacle : MonoBehaviour
                 GameManager.instance.speechToBeDetected.RemoveAt(i);
         }
         yield return new WaitForSeconds(seconds);
-        GameManager.instance.isVoiceEnemyAlive = false;
+        GameManager.instance.isDifficultEnemyAlive = false;
         Destroy(gameObject);
     }
 }

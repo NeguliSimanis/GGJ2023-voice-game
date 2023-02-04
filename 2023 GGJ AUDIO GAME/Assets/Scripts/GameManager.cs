@@ -35,8 +35,18 @@ public class GameManager : MonoBehaviour
     [Header("speech and texts")]
     public Texts texts;
     public List<SpeechTypes> speechToBeDetected = new List<SpeechTypes>();
-    public bool isVoiceEnemyAlive = false;
-    public Obstacle voiceEnemy;
+    public bool isDifficultEnemyAlive = false;
+    public Obstacle difficultEnemy;
+
+    [Header("year")]
+    public int currentYear;
+    public bool isBC;
+    private float lastYearUpdateTime = 0;
+    private float yearUpdateInterval = 0.72f;
+    public int totalYears = 0;
+    public int aristotleEndYear = 1200;
+    public int thomasEndYear = 1610;
+    public int decartesEndYear = 1860;
 
     public static GameManager instance;
 
@@ -55,21 +65,23 @@ public class GameManager : MonoBehaviour
         managerUI = GameObject.FindGameObjectWithTag("ManagerOther").GetComponent<ManagerUI>();
 
         // RESET STATS
-        speedMultiplierPerSecond = 0.0017f;
+        speedMultiplierPerSecond = 0.0015f;
         currSpeedMultiplier = 1f;
-        maxSpeedMultiplier = 4.5f;
+        maxSpeedMultiplier = 3.0f;
         lastSpeedUpdate = 0;
 
         isGameOver = false;
         nextEnemySpawnTime = Time.time + minEnemySpawnCooldown;
-        lastSpeedUpdate = 0;
+        lastSpeedUpdate = Time.time;
         currPhilosphers = 1;
+
+        // year
+        currentYear = 350;
+        isBC = true;
+        lastYearUpdateTime = Time.time;
+        totalYears = 0;
     }
 
-    private void Start()
-    {
-        
-    }
 
     public bool ProcessCollisionWithPhilosopher()
     {
@@ -98,6 +110,7 @@ public class GameManager : MonoBehaviour
             return;
         ManageGameSpeed();
         ManageEnemySpawning();
+        UpdateCurrentYear();
     }
 
     private void ManageEnemySpawning()
@@ -111,12 +124,12 @@ public class GameManager : MonoBehaviour
                 -2.82f,
                 newEnemy.transform.position.z);
             Obstacle newEnemyController = newEnemy.gameObject.GetComponent<Obstacle>();
-            if (!isVoiceEnemyAlive)
+            if (!isDifficultEnemyAlive)
             {
-                isVoiceEnemyAlive = true;
-                newEnemyController.isAudioEnemy = true;
+                isDifficultEnemyAlive = true;
+                newEnemyController.isDifficultEnemy = true;
                 newEnemyController.InitializeEnemy();
-                voiceEnemy = newEnemyController;
+                difficultEnemy = newEnemyController;
             }
         }
     }
@@ -133,5 +146,31 @@ public class GameManager : MonoBehaviour
     public void RestartGame()
     {
         SceneManager.LoadScene(0);
+    }
+
+    private void UpdateCurrentYear()
+    {
+        float yearSpeedMultiplier = yearUpdateInterval / currSpeedMultiplier;
+        if (currentYear < aristotleEndYear)
+            yearSpeedMultiplier = yearSpeedMultiplier/4;
+        else if (currentYear < thomasEndYear)
+            yearSpeedMultiplier = yearSpeedMultiplier/2;
+        if (Time.time < lastYearUpdateTime + yearSpeedMultiplier)
+            return;
+        lastYearUpdateTime = Time.time;
+        totalYears++;
+        if (isBC)
+        {
+            currentYear--;
+            if (currentYear == 0)
+            {
+                isBC = false;
+            }
+        }
+        else
+        {
+            currentYear++;
+        }
+        managerUI.UpdateYearText();
     }
 }
