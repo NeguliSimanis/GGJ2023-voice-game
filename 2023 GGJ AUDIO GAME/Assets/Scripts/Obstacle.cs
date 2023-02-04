@@ -11,6 +11,7 @@ public class Obstacle : MonoBehaviour
     public Player player;
     private bool hasInteractedWithPlayer = false;
     private bool isDead = false;
+    public bool isInitialized = false;
     
     /// <summary>
     /// leftmost position obstacle moves before it is destroyed
@@ -28,15 +29,15 @@ public class Obstacle : MonoBehaviour
     [SerializeField]
     private float colliderPlayerHandicap;
     private bool isInPlayerRange = false;
-    private bool canHurtPlayer = true;
+    public bool canHurtPlayer = true;
 
     [Header("VISUAL")]
-    [SerializeField] private TextMeshProUGUI myText;
+    [SerializeField] public TextMeshProUGUI myText;
     [SerializeField] private SpriteRenderer mySprite;
 
     [Header("voic recog")]
     public bool isDifficultEnemy;
-    [SerializeField] private TextMeshProUGUI audioText;
+    [SerializeField] public TextMeshProUGUI audioText;
     public SpeechTypes mySpeechType = SpeechTypes.Join;
 
     [Header("PHILOSOPHERS")]
@@ -47,14 +48,13 @@ public class Obstacle : MonoBehaviour
     public Dictionary<int, Philosopher> philosopherRequirements;
 
     // text input
-    string alphabet = "abcdefghijklmnopqrstuvwxyz";
-    string wordTyped = "";
-    int lettersTyped = 0;
+    public string wordTyped = "";
+    public int lettersTyped = 0;
 
     private void Start()
     {
         player = GameManager.instance.currPlayer;
-        myText.text = GameManager.instance.texts.GetRandomText(difficulty: 0).ToUpper();
+        myText.text = GameManager.instance.texts.GetRandomText(difficulty: GameManager.instance.difficulty);
         InitializeEnemy();
     }
 
@@ -84,49 +84,30 @@ public class Obstacle : MonoBehaviour
         audioText.gameObject.SetActive(false);
         SetMySprite();
         GameManager.instance.enemies.Add(this);
+        GameManager.instance.enemies[0] = this;
+
+        isInPlayerRange = true;
+        myText.color = Color.yellow;
+        myText.fontStyle = FontStyles.Bold;
+        isInitialized = true;
     }
 
     // Update is called once per frame
     void FixedUpdate()
     {
         transform.Translate(Vector2.left * speed * Time.deltaTime * GameManager.instance.currSpeedMultiplier);
-        CheckForCollisionWithPlayer();
         if (transform.position.x < minPosX)
             Destroy(gameObject);
     }
 
+    private void Update()
+    {
+        CheckForCollisionWithPlayer();
+    }
+
     private void CheckForCollisionWithPlayer()
     {
-        if (!isInPlayerRange)
-        {
-            //Debug.LogError("ya");
-            isInPlayerRange = true;
-            myText.color = Color.yellow;
-            myText.fontStyle = FontStyles.Bold;
-
-        }
-        if (isInPlayerRange)
-        {
-            ListenToPlayerInput();
-        }
-        //}
-        //if (player.transform.position.x > colliderLeftOffset + transform.position.x - (colliderPlayerHandicap*4) &&
-        //    player.transform.position.x < colliderRightOffset + transform.position.x + colliderPlayerHandicap &&
-        //    player.transform.position.y < colliderTopOffset + transform.position.y + colliderPlayerHandicap)
-        //{
-        //    if (!isInPlayerRange)
-        //    {
-        //        //Debug.LogError("ya");
-        //        isInPlayerRange = true;
-        //        myText.color = Color.yellow;
-        //        myText.fontStyle = FontStyles.Bold;
-
-        //    }
-        //    if (isInPlayerRange)
-        //    {
-        //        ListenToPlayerInput();
-        //    }
-        //}
+        
         if (player.transform.position.x > transform.position.x + 0.2f &&
             player.transform.position.x < colliderRightOffset * 0.4f + transform.position.x && 
             player.transform.position.y < colliderTopOffset * 0.4f + transform.position.y)
@@ -141,43 +122,7 @@ public class Obstacle : MonoBehaviour
         }
     }
 
-    private void ListenToPlayerInput()
-    {
-       string requiredText = myText.text;
-       string nextChar = "" + requiredText[lettersTyped];
-        Debug.Log(" char " + Input.inputString);
-       //if (Input.inputString.ToUpper() == myText.text)
-       // {
-       //     canHurtPlayer = false;
-       //     ProcessDeath(ObstacleDeath.PunchedByPlayer);
-       // }
 
-        foreach (char letter in alphabet)
-        {
-            string letterString = "" + letter;
-            if (letterString == "" + Input.inputString.ToLower())
-            {
-                if (letterString == nextChar)
-                {
-                    wordTyped += nextChar;
-                    audioText.gameObject.SetActive(true);
-                    audioText.color = Color.green;
-                    audioText.text = wordTyped;
-
-                    lettersTyped++;
-                    Debug.Log("typed " + nextChar);
-                    
-                    if (lettersTyped >= requiredText.Length
-                        || wordTyped == requiredText)
-                    {
-                        
-                        canHurtPlayer = false;
-                        ProcessDeath(ObstacleDeath.PunchedByPlayer);
-                    }
-                }
-            }
-        }
-    }
 
     public void ProcessDeath(ObstacleDeath death)
     {
@@ -223,6 +168,7 @@ public class Obstacle : MonoBehaviour
                 GameManager.instance.speechToBeDetected.RemoveAt(i);
         }
         GameManager.instance.enemies.Remove(this);
+        GameManager.instance.enemies.Clear();
         yield return new WaitForSeconds(seconds);
         GameManager.instance.isDifficultEnemyAlive = false;
         Destroy(gameObject);

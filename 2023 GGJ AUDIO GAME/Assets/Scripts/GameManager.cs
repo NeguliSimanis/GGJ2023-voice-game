@@ -6,6 +6,7 @@ using UnityEngine.SceneManagement;
 public class GameManager : MonoBehaviour
 {
     bool isGameOver = true;
+    public int difficulty = 0;
 
     // UI
     [Header("Managers")]
@@ -86,6 +87,8 @@ public class GameManager : MonoBehaviour
         totalYears = 0;
 
         enemies.Clear();
+
+        difficulty = 0;
     }
 
 
@@ -117,12 +120,12 @@ public class GameManager : MonoBehaviour
         ManageGameSpeed();
         ManageEnemySpawning();
         UpdateCurrentYear();
-            
+        ListenToPlayerInput();
     }
 
     private void ManageEnemySpawning()
     {
-        if (Time.time > nextEnemySpawnTime)
+        if (Time.time > nextEnemySpawnTime && enemies.Count < 1)
         {
             nextEnemySpawnTime = Time.time + Random.Range(minEnemySpawnCooldown, maxEnemySpawnCooldown);
             GameObject newEnemy = Instantiate(enemy1);
@@ -180,5 +183,123 @@ public class GameManager : MonoBehaviour
             currentYear++;
         }
         managerUI.UpdateYearText();
+    }
+
+    private void ListenToPlayerInput()
+    {
+        if (enemies.Count < 1)
+            return;
+        if (!enemies[0].isInitialized)
+            return;
+        string requiredText = enemies[0].myText.text;
+        if (enemies[0].lettersTyped >= requiredText.Length)
+            return;
+        string nextChar = "" + requiredText[enemies[0].lettersTyped];
+        string inputString = "";
+        // Debug.Log(" char " + Input.inputString);
+        if (Input.GetKeyDown(key: KeyCode.A))
+        {
+            inputString += "a";
+            Debug.Log("a");
+        }
+        else if (Input.GetKeyDown(key: KeyCode.B))
+        { 
+            inputString += "b";
+        Debug.Log("a");
+        }
+        else if (Input.GetKeyDown(key: KeyCode.C))
+            inputString += "c";
+        else if (Input.GetKeyDown(key: KeyCode.D))
+            inputString += "d";
+        else if (Input.GetKeyDown(key: KeyCode.E))
+            inputString += "e";
+        else if (Input.GetKeyDown(key: KeyCode.F))
+            inputString += "f";
+        else if (Input.GetKeyDown(key: KeyCode.G))
+            inputString += "g";
+        else if (Input.GetKeyDown(key: KeyCode.H))
+            inputString += "h";
+        else if (Input.GetKeyDown(key: KeyCode.I))
+            inputString += "i";
+        else if (Input.GetKeyDown(key: KeyCode.J))
+            inputString += "j";
+        else if (Input.GetKeyDown(key: KeyCode.K))
+            inputString += "k";
+        else if (Input.GetKeyDown(key: KeyCode.L))
+            inputString += "l";
+        else if (Input.GetKeyDown(key: KeyCode.M))
+            inputString += "m";
+        else if (Input.GetKeyDown(key: KeyCode.N))
+            inputString += "n";
+        else if (Input.GetKeyDown(key: KeyCode.O))
+            inputString += "o";
+        else if (Input.GetKeyDown(key: KeyCode.P))
+            inputString += "p";
+        else if (Input.GetKeyDown(key: KeyCode.Q))
+            inputString += "q";
+        else if (Input.GetKeyDown(key: KeyCode.R))
+            inputString += "r";
+        else if (Input.GetKeyDown(key: KeyCode.S))
+            inputString += "s";
+        else if (Input.GetKeyDown(key: KeyCode.T))
+            inputString += "t";
+        else if (Input.GetKeyDown(key: KeyCode.U))
+            inputString += "u";
+        else if (Input.GetKeyDown(key: KeyCode.V))
+            inputString += "v";
+        else if (Input.GetKeyDown(key: KeyCode.W))
+            inputString += "w";
+        else if (Input.GetKeyDown(key: KeyCode.X))
+            inputString += "x";
+        else if (Input.GetKeyDown(key: KeyCode.Y))
+            inputString += "y";
+        else if (Input.GetKeyDown(key: KeyCode.Z))
+            inputString += "z";
+        else if (Input.GetKeyDown(key: KeyCode.Space))
+            inputString += " ";
+        //if (Input.inputString.ToUpper() == myText.text)
+        // {
+        //     canHurtPlayer = false;
+        //     ProcessDeath(ObstacleDeath.PunchedByPlayer);
+        // }
+
+        if (inputString == nextChar.ToLower())
+        {
+            enemies[0].wordTyped += nextChar;
+            enemies[0].audioText.gameObject.SetActive(true);
+            enemies[0].audioText.color = Color.green;
+            enemies[0].audioText.text = enemies[0].wordTyped;
+
+            enemies[0].lettersTyped++;
+
+            if (enemies[0].lettersTyped >= requiredText.Length
+                || enemies[0].wordTyped == requiredText.ToLower())
+            {
+
+                enemies[0].canHurtPlayer = false;
+                enemies[0].ProcessDeath(ObstacleDeath.PunchedByPlayer);
+            }
+        }
+    }
+
+    void UpdateDifficulty()
+    {
+        int year = currentYear;
+        if (year < aristotleEndYear)
+        {
+            difficulty = 0;
+        }
+        else if (year < thomasEndYear)
+        {
+            difficulty = 1;
+        }
+        else if (year < GameManager.instance.decartesEndYear)
+        {
+            difficulty = 2;
+        }
+        else
+        {
+            difficulty = 3;
+        }
     }
 }

@@ -53,7 +53,7 @@ public class ManagerUI : MonoBehaviour
 
     public void UpdatePhilosopherCount()
     {
-        philosopherCountText.text = "Philosophers: " + GameManager.instance.currPhilosphers.ToString();
+        philosopherCountText.text = GameManager.instance.currPhilosphers.ToString();
     }
 
     public void UpdateYearText()
