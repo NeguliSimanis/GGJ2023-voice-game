@@ -5,7 +5,7 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
-
+    public ScreenShake screenShake;
     public AnimationCurve yearCurve;
     private float playtime;
     public float maxPlaytime;
@@ -257,6 +257,11 @@ public class GameManager : MonoBehaviour
                 enemies[0].canHurtPlayer = false;
                 enemies[0].ProcessDeath(ObstacleDeath.PunchedByPlayer);
             }
+
+        }
+        else if (string.IsNullOrEmpty(inputString))
+        {
+            //this.screenShake.Shake();
         }
     }
 
