@@ -93,6 +93,7 @@ public class GameManager : MonoBehaviour
     {
         bool philosopherDied = true;
         AddPhilosopher(-1);
+        this.screenShake.TriggerShake(0.5f);
         return philosopherDied;
     }
 
@@ -257,13 +258,10 @@ public class GameManager : MonoBehaviour
             }
 
         }
-        else if (string.IsNullOrEmpty(inputString))
-        {
-            //this.screenShake.Shake();
-        }
-        else if (inputString != null)
+        else if (inputString != "")
         {
             managerAudio.PlayFailSFX();
+            this.screenShake.TriggerShake(0.5f);
         }
     }
 

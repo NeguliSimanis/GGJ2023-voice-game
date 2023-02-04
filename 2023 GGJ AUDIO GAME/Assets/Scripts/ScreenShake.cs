@@ -3,46 +3,32 @@ using UnityEngine;
 
 public class ScreenShake : MonoBehaviour
 {
-    private Vector3 originalCameraPosition;
-    public float amount = 0.01f;
-    public Camera mainCamera;
+    public float shakeAmount = 0.7f;
 
-    void Awake()
+    Vector3 originalPos;
+    float shakeTime;
+
+    void Start()
     {
-        if (mainCamera == null)
+        originalPos = transform.localPosition;
+    }
+
+    void Update()
+    {
+        if (shakeTime > 0)
         {
-            mainCamera = Camera.main;
+            transform.localPosition = originalPos + Random.insideUnitSphere * shakeAmount;
+            shakeTime -= Time.deltaTime;
+        }
+        else
+        {
+            shakeTime = 0f;
+            transform.localPosition = originalPos;
         }
     }
 
-    void OnEnable()
+    public void TriggerShake(float shake)
     {
-        originalCameraPosition = mainCamera.transform.position;
-    }
-
-    public void Shake()
-    {
-        StartCoroutine(ShakeCamera());
-    }
-
-    private IEnumerator ShakeCamera()
-    {
-        float elapsed = 0.0f;
-        float shakeDuration = 0.5f;
-
-        while (elapsed < shakeDuration)
-        {
-            float x = Random.Range(-1f, 1f) * amount;
-            float y = Random.Range(-1f, 1f) * amount;
-
-            mainCamera.transform.position = new Vector3(x, y, originalCameraPosition.z);
-
-            elapsed += Time.deltaTime;
-
-            yield return null;
-        }
-
-        mainCamera.transform.position = originalCameraPosition;
+        shakeTime = shake;
     }
 }
-
