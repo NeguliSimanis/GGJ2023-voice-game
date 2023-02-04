@@ -5,6 +5,12 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
+
+    public AnimationCurve yearCurve;
+    private float playtime;
+    public float maxPlaytime;
+    public float minYears;
+    public float maxYears;
     bool isGameOver = true;
     public int difficulty = 0;
 
@@ -41,12 +47,6 @@ public class GameManager : MonoBehaviour
     public Obstacle difficultEnemy;
     public List<Obstacle> enemies = new List<Obstacle>();
 
-    [Header("year")]
-    public int currentYear;
-    public bool isBC;
-    private float lastYearUpdateTime = 0;
-    private float yearUpdateInterval = 0.72f;
-    public int totalYears = 0;
     public int aristotleEndYear = 1200;
     public int thomasEndYear = 1610;
     public int decartesEndYear = 1860;
@@ -79,11 +79,6 @@ public class GameManager : MonoBehaviour
         lastSpeedUpdate = Time.time;
         currPhilosphers = 1;
 
-        // year
-        currentYear = 350;
-        isBC = true;
-        lastYearUpdateTime = Time.time;
-        totalYears = 0;
 
         enemies.Clear();
         difficulty = 0;
@@ -99,7 +94,7 @@ public class GameManager : MonoBehaviour
 
     public void AddPhilosopher(int count)
     {
-        currPhilosphers+=count;
+        currPhilosphers += count;
         managerUI.UpdatePhilosopherCount();
         if (currPhilosphers <= 0)
             GameOver();
@@ -117,7 +112,7 @@ public class GameManager : MonoBehaviour
             return;
         ManageGameSpeed();
         ManageEnemySpawning();
-        UpdateCurrentYear();
+        UpdatePlaytime();
         ListenToPlayerInput();
     }
 
@@ -128,7 +123,7 @@ public class GameManager : MonoBehaviour
             nextEnemySpawnTime = Time.time + Random.Range(minEnemySpawnCooldown, maxEnemySpawnCooldown);
             GameObject newEnemy = Instantiate(enemy1);
             newEnemy.transform.position = new Vector3(
-                enemySpawnPosX+1f,
+                enemySpawnPosX + 1f,
                 -2.82f,
                 newEnemy.transform.position.z);
             Obstacle newEnemyController = newEnemy.gameObject.GetComponent<Obstacle>();
@@ -157,32 +152,17 @@ public class GameManager : MonoBehaviour
     }
 
 
-    private void UpdateCurrentYear()
+    private void UpdatePlaytime()
     {
-        float yearSpeedMultiplier = yearUpdateInterval / currSpeedMultiplier;
-        if (currentYear < aristotleEndYear)
-            yearSpeedMultiplier = yearSpeedMultiplier/10;
-        else if (currentYear < thomasEndYear)
-            yearSpeedMultiplier = yearSpeedMultiplier/4;
-        if (Time.time < lastYearUpdateTime + yearSpeedMultiplier)
-            return;
-        lastYearUpdateTime = Time.time;
-        totalYears++;
-        if (isBC)
-        {
-            currentYear--;
-            if (currentYear == 0)
-            {
-                isBC = false;
-            }
-        }
-        else
-        {
-            currentYear++;
-        }
+
+        this.playtime += Time.deltaTime;
         managerUI.UpdateYearText();
     }
 
+    public float GetCurrentYear()
+    {
+        return this.yearCurve.Evaluate(this.playtime / this.maxPlaytime) * (this.maxYears - this.minYears) + this.minYears;
+    }
     private void ListenToPlayerInput()
     {
         if (enemies.Count < 1)
@@ -200,7 +180,7 @@ public class GameManager : MonoBehaviour
             inputString += "a";
         }
         else if (Input.GetKeyDown(key: KeyCode.B))
-        { 
+        {
             inputString += "b";
         }
         else if (Input.GetKeyDown(key: KeyCode.C))
@@ -280,7 +260,7 @@ public class GameManager : MonoBehaviour
 
     void UpdateDifficulty()
     {
-        int year = currentYear;
+        int year = (int)this.GetCurrentYear();
         if (year < aristotleEndYear)
         {
             difficulty = 0;

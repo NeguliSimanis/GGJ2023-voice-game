@@ -7,12 +7,12 @@ using UnityEngine.UI;
 
 public class Obstacle : MonoBehaviour
 {
-   
+
     public Player player;
     private bool hasInteractedWithPlayer = false;
     private bool isDead = false;
     public bool isInitialized = false;
-    
+
     /// <summary>
     /// leftmost position obstacle moves before it is destroyed
     /// </summary>
@@ -60,7 +60,7 @@ public class Obstacle : MonoBehaviour
 
     private void SetMySprite()
     {
-         int year = GameManager.instance.currentYear;
+        int year = (int)GameManager.instance.GetCurrentYear();
         if (year < GameManager.instance.aristotleEndYear)
         {
             mySprite.sprite = aristotle;
@@ -107,18 +107,18 @@ public class Obstacle : MonoBehaviour
 
     private void CheckForCollisionWithPlayer()
     {
-        
+
         if (player.transform.position.x > transform.position.x + 0.2f &&
-            player.transform.position.x < colliderRightOffset * 0.4f + transform.position.x && 
+            player.transform.position.x < colliderRightOffset * 0.4f + transform.position.x &&
             player.transform.position.y < colliderTopOffset * 0.4f + transform.position.y)
         {
-            if (canHurtPlayer && 
+            if (canHurtPlayer &&
                 !hasInteractedWithPlayer && GameManager.instance.ProcessCollisionWithPhilosopher())
             {
                 hasInteractedWithPlayer = true;
                 ProcessDeath(ObstacleDeath.MissedByPlayer);
             }
-            
+
         }
     }
 
