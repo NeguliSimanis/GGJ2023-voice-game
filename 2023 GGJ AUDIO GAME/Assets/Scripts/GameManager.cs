@@ -179,6 +179,14 @@ public class GameManager : MonoBehaviour
         if (enemies[0].lettersTyped >= requiredText.Length)
             return;
         string nextChar = "" + requiredText[enemies[0].lettersTyped];
+        if (nextChar == " ")
+        {
+            enemies[0].lettersTyped++;
+            enemies[0].wordTyped += " ";
+            nextChar = "" + requiredText[enemies[0].lettersTyped];
+        }
+
+
         string inputString = "";
         // Debug.Log(" char " + Input.inputString);
         if (Input.GetKeyDown(key: KeyCode.A))
@@ -267,6 +275,8 @@ public class GameManager : MonoBehaviour
 
     void UpdateDifficulty()
     {
+        difficulty = 3;
+        return;
         int year = (int)this.GetCurrentYear();
         if (year < aristotleEndYear)
         {
