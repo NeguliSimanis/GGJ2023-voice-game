@@ -11,12 +11,16 @@ public class PhilosopherAnimations : MonoBehaviour
 
     // AGE STUFF
     public int myAge = 1;
-    public int maxAge = 121;
+    public int maxAge;
     [SerializeField]
     private TextMeshProUGUI ageText;
     public int birthYear;
     public int deathYear;
     private bool isDead = false;
+
+    float deathTime;
+    float birthTime;
+    float yearLength = 0.15f;
     
     // ANIMATIONS
     public Philosopher philosopher;
@@ -50,7 +54,11 @@ public class PhilosopherAnimations : MonoBehaviour
         birthYear = (int)GameManager.instance.GetCurrentYear();
         deathYear = birthYear + maxAge;
         Debug.Log(" birth: " + birthYear + " . Death: " + deathYear);
+
+        birthTime = Time.time;
+        deathTime = birthTime + yearLength * maxAge;
         playerInitialized = true;
+  
     }
     private void Update()
     {
@@ -61,7 +69,7 @@ public class PhilosopherAnimations : MonoBehaviour
         if (!playerInitialized)
             return;
         //Debug.Log(GameManager.instance.GetCurrentYear() + " ? " + deathYear);
-        if (GameManager.instance.GetCurrentYear() > deathYear)
+        if (Time.time > deathTime)
         {
             isDead = true;
             Debug.Log(gameObject + " MUST DIE!");
@@ -75,6 +83,14 @@ public class PhilosopherAnimations : MonoBehaviour
 
     private void SetCurrAge()
     {
+        float temp = (Time.time - birthTime) / yearLength;
+        myAge = (int)temp + 1;
+
+        if (myAge > 80)
+        {
+            ageText.color = Color.red;
+        }
+        return;
         int currYear = (int)GameManager.instance.GetCurrentYear();
         if (birthYear < 0 && currYear < 0)
         {
@@ -87,8 +103,9 @@ public class PhilosopherAnimations : MonoBehaviour
         else
         {
             myAge = currYear - birthYear;
+
+
         }
-       
     }
 
     public void ChangePhilosopher(Philosopher newPhilo)

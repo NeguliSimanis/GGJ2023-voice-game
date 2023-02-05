@@ -36,8 +36,8 @@ public class GameManager : MonoBehaviour
     // Enemy spawning
     [Header("enemy")]
     public GameObject enemy1;
-    private float minEnemySpawnCooldown = 3.2f;
-    private float maxEnemySpawnCooldown = 3.6f;
+    private float minEnemySpawnCooldown = 1.2f;
+    private float maxEnemySpawnCooldown = 2.6f;
     private float lastEnemySpawnTime = 0;
     private float nextEnemySpawnTime;
     private float enemySpawnPosX = 8f;
@@ -90,7 +90,8 @@ public class GameManager : MonoBehaviour
         difficulty = 0;
         playtime = 0;
 
-        // reset player age
+        // player
+        currPlayer.InitializePlayer();
         currPlayer.myAnimations.myAge = 1;
         currPlayer.myAnimations.birthYear = (int)GameManager.instance.GetCurrentYear();
         currPlayer.myAnimations.deathYear = currPlayer.myAnimations.birthYear + currPlayer.myAnimations.maxAge;

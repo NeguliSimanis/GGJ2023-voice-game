@@ -22,13 +22,17 @@ public class ManagerCamera : MonoBehaviour
 
     public void ZoomOut()
     {
-        zoomLevel++;
+        zoomLevel = GameManager.instance.currPhilosphers - 1;
         IEnumerator zoom = ChangeZoom(defaultCameraSize + ZOOM_PER_LEVEL * zoomLevel);
         StartCoroutine(zoom);
     }
     public void ZoomIn()
     {
-        zoomLevel--;
+        zoomLevel = GameManager.instance.currPhilosphers - 1;
+        if (zoomLevel < 0)
+        {
+            zoomLevel = 0;
+        }
         IEnumerator zoom = ChangeZoom(defaultCameraSize + ZOOM_PER_LEVEL * zoomLevel);
         StartCoroutine(zoom);
     }
