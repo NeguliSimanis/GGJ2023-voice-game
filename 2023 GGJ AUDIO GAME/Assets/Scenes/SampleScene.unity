@@ -3599,6 +3599,7 @@ MonoBehaviour:
   mainSprite: {fileID: 138840093}
   myAnimations: {fileID: 1717882578}
   followerPrefab: {fileID: 752066231013482244, guid: 3ac702966507d2b408a9df7f16275d88, type: 3}
+  graveStone: {fileID: 5164932501266688437, guid: 5ef610a0d81cc3942a93e5a68c2c58a6, type: 3}
 --- !u!4 &1305798402
 Transform:
   m_ObjectHideFlags: 0
@@ -6063,6 +6064,8 @@ MonoBehaviour:
   maxPlaytime: 3800
   minYears: -350
   maxYears: 20000
+  isGameOver: 1
+  isGameStarted: 0
   difficulty: 0
   managerUI: {fileID: 0}
   managerCamera: {fileID: 0}

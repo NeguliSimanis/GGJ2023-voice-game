@@ -15,7 +15,7 @@ public class ManagerAudio : MonoBehaviour
 
     public void PlayPhilosopherSFX()
     {
-        audioSource.PlayOneShot(philosopherJoined, 1f);
+        //audioSource.PlayOneShot(philosopherJoined, 1f);
     }
 
     public void PlaySuccessSFX()

@@ -23,6 +23,7 @@ public class Texts : MonoBehaviour
         philosopherTexts.Add("Mad", 0);
         philosopherTexts.Add("See", 0);
         philosopherTexts.Add("Age", 0);
+        philosopherTexts.Add("Gold", 0);
         philosopherTexts.Add("Atom", 0);
         philosopherTexts.Add("Punch", 0);
         philosopherTexts.Add("Based", 0);
@@ -46,6 +47,8 @@ public class Texts : MonoBehaviour
         philosopherTexts.Add("Arm", 0);
         philosopherTexts.Add("Zen", 0);
         philosopherTexts.Add("Time", 0);
+        philosopherTexts.Add("Love", 0);
+        philosopherTexts.Add("Why", 0);
 
 
         //
@@ -76,6 +79,7 @@ public class Texts : MonoBehaviour
         philosopherTexts.Add("Religion", 1);
         philosopherTexts.Add("Theory", 1);
         philosopherTexts.Add("Joy plants", 1);
+        philosopherTexts.Add("Essence", 1);
 
 
         //

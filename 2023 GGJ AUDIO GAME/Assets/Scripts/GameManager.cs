@@ -11,8 +11,8 @@ public class GameManager : MonoBehaviour
     public float maxPlaytime;
     public float minYears;
     public float maxYears;
-    bool isGameOver = true;
-    bool isGameStarted = false;
+    public bool isGameOver = true;
+    public bool isGameStarted = false;
     public int difficulty = 0;
 
     // UI
