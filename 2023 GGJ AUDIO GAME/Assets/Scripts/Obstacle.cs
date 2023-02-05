@@ -52,11 +52,37 @@ public class Obstacle : MonoBehaviour
     public string wordTyped = "";
     public int lettersTyped = 0;
 
+    public GameObject wordPanel;
+
+    public Letter letterPrefab;
+
+    public List<Letter> letters = new List<Letter>();
+
     private void Start()
     {
         player = GameManager.instance.currPlayer;
         myText.text = GameManager.instance.texts.GetRandomText(difficulty: GameManager.instance.difficulty).ToUpper();
         int myLength = myText.text.Length;
+
+        foreach (Transform child in wordPanel.transform)
+        {
+            Destroy(child.gameObject);
+        }
+
+        foreach (char letter in myText.text)
+        {
+            Letter newLetter = Instantiate(letterPrefab, wordPanel.transform);
+            if (letter == ' ')
+            {
+                newLetter.SetEmpty();
+            }
+            else
+            {
+                newLetter.SetLetter(letter.ToString());
+            }
+            letters.Add(newLetter);
+        }
+
         if (myLength > 6)
             speed *= 0.8f;
         if (myLength > 8)
@@ -66,6 +92,13 @@ public class Obstacle : MonoBehaviour
         InitializeEnemy();
     }
 
+    public void UpdateLetters()
+    {
+        for (int i = 0; i < wordTyped.Length; i++)
+        {
+            letters[i].CompleteLetter();
+        }
+    }
     private void SetMySprite()
     {
         int year = (int)GameManager.instance.GetCurrentYear();

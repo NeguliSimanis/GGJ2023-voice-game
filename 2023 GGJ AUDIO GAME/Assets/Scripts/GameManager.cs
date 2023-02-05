@@ -116,9 +116,9 @@ public class GameManager : MonoBehaviour
             joined = true;
             currPhilosphers += count;
             if (playSFX)
-            managerAudio.PlayPhilosopherSFX();
+                managerAudio.PlayPhilosopherSFX();
             managerUI.UpdatePhilosopherCount();
-           
+
         }
         else if (count < 0)
         {
@@ -163,7 +163,7 @@ public class GameManager : MonoBehaviour
                 managerUI.RestartGame();
             }
         }
-        
+
     }
 
     private void ManageEnemySpawning()
@@ -230,6 +230,7 @@ public class GameManager : MonoBehaviour
         {
             enemies[0].lettersTyped++;
             enemies[0].wordTyped += " ";
+            enemies[0].UpdateLetters();
             nextChar = "" + requiredText[enemies[0].lettersTyped];
         }
 
@@ -301,6 +302,7 @@ public class GameManager : MonoBehaviour
             enemies[0].audioText.gameObject.SetActive(true);
             enemies[0].audioText.color = Color.green;
             enemies[0].audioText.text = enemies[0].wordTyped;
+            enemies[0].UpdateLetters();
             enemies[0].lettersTyped++;
             managerAudio.PlaySuccessSFX();
 
