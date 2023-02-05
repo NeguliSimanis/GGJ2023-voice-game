@@ -15,7 +15,6 @@ public class ManagerAudio : MonoBehaviour
 
     public void PlayPhilosopherSFX()
     {
-        Debug.Log("acquired");
         audioSource.PlayOneShot(philosopherJoined, 1f);
     }
 

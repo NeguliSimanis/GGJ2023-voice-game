@@ -37,7 +37,7 @@ public class GameManager : MonoBehaviour
     [Header("enemy")]
     public GameObject enemy1;
     private float minEnemySpawnCooldown = 3.2f;
-    private float maxEnemySpawnCooldown = 5f;
+    private float maxEnemySpawnCooldown = 3.6f;
     private float lastEnemySpawnTime = 0;
     private float nextEnemySpawnTime;
     private float enemySpawnPosX = 8f;
@@ -81,7 +81,7 @@ public class GameManager : MonoBehaviour
 
         isGameOver = false;
         isGameStarted = true;
-        nextEnemySpawnTime = Time.time + 0.2f;
+        nextEnemySpawnTime = Time.time;
         lastSpeedUpdate = Time.time;
         currPhilosphers = 1;
 
@@ -89,6 +89,11 @@ public class GameManager : MonoBehaviour
         enemies.Clear();
         difficulty = 0;
         playtime = 0;
+
+        // reset player age
+        currPlayer.myAnimations.myAge = 1;
+        currPlayer.myAnimations.birthYear = (int)GameManager.instance.GetCurrentYear();
+        currPlayer.myAnimations.deathYear = currPlayer.myAnimations.birthYear + currPlayer.myAnimations.maxAge;
     }
 
 
@@ -100,17 +105,17 @@ public class GameManager : MonoBehaviour
         return philosopherDied;
     }
 
-    public bool AddPhilosopher(int count)
+    public bool AddPhilosopher(int count, bool playSFX = true)
     {
         bool joined = false;
-        float joinChance = 0.36f;
+        float joinChance = 1.36f;
         float roll = Random.Range(0f, 1f);
 
         if (roll < joinChance && count > 0)
         {
             joined = true;
-            Debug.Log("random roll " + roll);
             currPhilosphers += count;
+            if (playSFX)
             managerAudio.PlayPhilosopherSFX();
             managerUI.UpdatePhilosopherCount();
            
@@ -119,7 +124,8 @@ public class GameManager : MonoBehaviour
         {
             currPhilosphers += count;
             managerUI.UpdatePhilosopherCount();
-            managerAudio.PlayFailSFX(addedVolume: 0.1f);
+            if (playSFX)
+                managerAudio.PlayFailSFX(addedVolume: 0.1f);
             if (currPhilosphers <= 0)
                 GameOver();
         }

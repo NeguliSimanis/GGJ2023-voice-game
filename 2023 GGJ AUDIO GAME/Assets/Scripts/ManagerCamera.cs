@@ -29,7 +29,6 @@ public class ManagerCamera : MonoBehaviour
     public void ZoomIn()
     {
         zoomLevel--;
-        Debug.Log("Zooming in");
         IEnumerator zoom = ChangeZoom(defaultCameraSize + ZOOM_PER_LEVEL * zoomLevel);
         StartCoroutine(zoom);
     }
