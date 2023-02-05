@@ -31,6 +31,8 @@ public class ManagerUI : MonoBehaviour
         mainMenu.SetActive(true);
         restartButton.onClick.AddListener(RestartGame);
         startButton.onClick.AddListener(StartGame);
+
+        GameManager.instance.managerUI = this;
     }
 
     public void StartGame()

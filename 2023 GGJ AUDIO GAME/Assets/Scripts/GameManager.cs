@@ -144,7 +144,7 @@ public class GameManager : MonoBehaviour
 
     private void ListenToShortcuts()
     {
-        if (Input.GetKeyDown(KeyCode.KeypadEnter))
+        if (Input.GetKeyDown(KeyCode.Return))
         {
             if (isGameOver && !isGameStarted)
             {
