@@ -31,10 +31,12 @@ public class ManagerUI : MonoBehaviour
         mainMenu.SetActive(true);
         restartButton.onClick.AddListener(RestartGame);
         startButton.onClick.AddListener(StartGame);
+        GameManager.instance.managerUI = this;
     }
 
     public void StartGame()
     {
+        GameManager.instance.managerAudio.PlaySuccessSFX();
         mainMenu.SetActive(false);
         GameManager.instance.StartGame();
 
@@ -42,6 +44,7 @@ public class ManagerUI : MonoBehaviour
 
     public void RestartGame()
     {
+        GameManager.instance.managerAudio.PlaySuccessSFX();
         GameManager.instance.RestartGame();
     }
 

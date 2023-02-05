@@ -24,8 +24,8 @@ public class ManagerAudio : MonoBehaviour
         audioSource.PlayOneShot(inputSuccessSFX, 1f);
     }
 
-    public void PlayFailSFX()
+    public void PlayFailSFX(float addedVolume = 0f)
     {
-        audioSource.PlayOneShot(failSFX, volumeScale: 0.2f);
+        audioSource.PlayOneShot(failSFX, volumeScale: 0.2f + addedVolume);
     }
 }

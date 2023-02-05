@@ -36,8 +36,8 @@ public class GameManager : MonoBehaviour
     // Enemy spawning
     [Header("enemy")]
     public GameObject enemy1;
-    private float minEnemySpawnCooldown = 4.2f;
-    private float maxEnemySpawnCooldown = 8f;
+    private float minEnemySpawnCooldown = 3.2f;
+    private float maxEnemySpawnCooldown = 5f;
     private float lastEnemySpawnTime = 0;
     private float nextEnemySpawnTime;
     private float enemySpawnPosX = 8f;
@@ -62,6 +62,8 @@ public class GameManager : MonoBehaviour
         else
             Destroy(this.gameObject);
         DontDestroyOnLoad(this);
+
+        managerAudio = this.gameObject.GetComponent<ManagerAudio>();
     }
 
     public void StartGame()
@@ -69,7 +71,6 @@ public class GameManager : MonoBehaviour
         currPlayer = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
         GameObject otherManagers = GameObject.FindGameObjectWithTag("ManagerOther");
         managerUI = otherManagers.GetComponent<ManagerUI>();
-        managerAudio = otherManagers.GetComponent<ManagerAudio>();
         managerCamera = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<ManagerCamera>();
 
         // RESET STATS
@@ -102,7 +103,7 @@ public class GameManager : MonoBehaviour
     public bool AddPhilosopher(int count)
     {
         bool joined = false;
-        float joinChance = 0.37f;
+        float joinChance = 0.36f;
         float roll = Random.Range(0f, 1f);
 
         if (roll < joinChance && count > 0)
@@ -118,6 +119,7 @@ public class GameManager : MonoBehaviour
         {
             currPhilosphers += count;
             managerUI.UpdatePhilosopherCount();
+            managerAudio.PlayFailSFX(addedVolume: 0.1f);
             if (currPhilosphers <= 0)
                 GameOver();
         }
@@ -144,7 +146,7 @@ public class GameManager : MonoBehaviour
 
     private void ListenToShortcuts()
     {
-        if (Input.GetKeyDown(KeyCode.KeypadEnter))
+        if (Input.GetKeyDown(KeyCode.Return))
         {
             if (isGameOver && !isGameStarted)
             {
@@ -162,10 +164,12 @@ public class GameManager : MonoBehaviour
     {
         if (Time.time > nextEnemySpawnTime && enemies.Count < 1)
         {
+            float zoomSpawnOffset = managerCamera.zoomLevel * 0.77f;
+
             nextEnemySpawnTime = Time.time + Random.Range(minEnemySpawnCooldown, maxEnemySpawnCooldown);
             GameObject newEnemy = Instantiate(enemy1);
             newEnemy.transform.position = new Vector3(
-                enemySpawnPosX + 1f,
+                enemySpawnPosX + 1f + zoomSpawnOffset,
                 -2.82f,
                 newEnemy.transform.position.z);
             Obstacle newEnemyController = newEnemy.gameObject.GetComponent<Obstacle>();
@@ -190,6 +194,7 @@ public class GameManager : MonoBehaviour
 
     public void RestartGame()
     {
+        isGameStarted = false;
         SceneManager.LoadScene(0);
     }
 
