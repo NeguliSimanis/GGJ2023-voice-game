@@ -12,6 +12,7 @@ public class GameManager : MonoBehaviour
     public float minYears;
     public float maxYears;
     bool isGameOver = true;
+    bool isGameStarted = false;
     public int difficulty = 0;
 
     // UI
@@ -78,6 +79,7 @@ public class GameManager : MonoBehaviour
         lastSpeedUpdate = 0;
 
         isGameOver = false;
+        isGameStarted = true;
         nextEnemySpawnTime = Time.time + 0.2f;
         lastSpeedUpdate = Time.time;
         currPhilosphers = 1;
@@ -97,12 +99,29 @@ public class GameManager : MonoBehaviour
         return philosopherDied;
     }
 
-    public void AddPhilosopher(int count)
+    public bool AddPhilosopher(int count)
     {
-        currPhilosphers += count;
-        managerUI.UpdatePhilosopherCount();
-        if (currPhilosphers <= 0)
-            GameOver();
+        bool joined = false;
+        float joinChance = 0.37f;
+        float roll = Random.Range(0f, 1f);
+
+        if (roll < joinChance && count > 0)
+        {
+            joined = true;
+            Debug.Log("random roll " + roll);
+            currPhilosphers += count;
+            managerAudio.PlayPhilosopherSFX();
+            managerUI.UpdatePhilosopherCount();
+           
+        }
+        else if (count < 0)
+        {
+            currPhilosphers += count;
+            managerUI.UpdatePhilosopherCount();
+            if (currPhilosphers <= 0)
+                GameOver();
+        }
+        return joined;
     }
 
     public void GameOver()
@@ -113,6 +132,7 @@ public class GameManager : MonoBehaviour
 
     void Update()
     {
+        ListenToShortcuts();
         if (isGameOver)
             return;
         ManageGameSpeed();
@@ -120,6 +140,22 @@ public class GameManager : MonoBehaviour
         UpdatePlaytime();
         ListenToPlayerInput();
         UpdateDifficulty();
+    }
+
+    private void ListenToShortcuts()
+    {
+        if (Input.GetKeyDown(KeyCode.KeypadEnter))
+        {
+            if (isGameOver && !isGameStarted)
+            {
+                managerUI.StartGame();
+            }
+            else if (isGameOver)
+            {
+                managerUI.RestartGame();
+            }
+        }
+        
     }
 
     private void ManageEnemySpawning()
@@ -269,7 +305,7 @@ public class GameManager : MonoBehaviour
         else if (inputString != "")
         {
             managerAudio.PlayFailSFX();
-            this.screenShake.TriggerShake(0.5f);
+            this.screenShake.TriggerShake(0.3f);
         }
     }
 

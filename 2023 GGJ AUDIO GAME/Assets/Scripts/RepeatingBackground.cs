@@ -13,10 +13,6 @@ public class RepeatingBackground : MonoBehaviour
     public float maxX;
     public float minX;
 
-    [SerializeField]
-    bool isTree;
-    [SerializeField]
-    Sprite[] treeOptions;
     SpriteRenderer objectSprite;
     [SerializeField]
     private bool isFirstObstacle;

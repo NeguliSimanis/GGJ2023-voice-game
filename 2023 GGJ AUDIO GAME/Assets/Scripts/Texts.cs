@@ -17,6 +17,7 @@ public class Texts : MonoBehaviour
         philosopherTexts.Add("No", 0);
         philosopherTexts.Add("Yes", 0);
         philosopherTexts.Add("Eye", 0);
+        philosopherTexts.Add("Art", 0);
         philosopherTexts.Add("God", 0);
         philosopherTexts.Add("Sky", 0);
         philosopherTexts.Add("Mad", 0);
@@ -24,6 +25,7 @@ public class Texts : MonoBehaviour
         philosopherTexts.Add("Age", 0);
         philosopherTexts.Add("Atom", 0);
         philosopherTexts.Add("Punch", 0);
+        philosopherTexts.Add("Based", 0);
         philosopherTexts.Add("Life", 0);
         philosopherTexts.Add("Case", 0);
         philosopherTexts.Add("Veto", 0);
@@ -66,6 +68,7 @@ public class Texts : MonoBehaviour
 
         //
         philosopherTexts.Add("Ita vero", 2);
+        philosopherTexts.Add("Perception", 2);
         philosopherTexts.Add("Pro bono", 2);
         philosopherTexts.Add("Education", 2);
         philosopherTexts.Add("Evolution", 2);
@@ -78,7 +81,6 @@ public class Texts : MonoBehaviour
         philosopherTexts.Add("Experience", 2);
         philosopherTexts.Add("Motivation", 2);
         philosopherTexts.Add("Philosophy", 2);
-        philosopherTexts.Add("Perception", 2);
         philosopherTexts.Add("Ad Hominem", 2);
         philosopherTexts.Add("Ipso Facto", 2);
 
@@ -108,7 +110,6 @@ public class Texts : MonoBehaviour
     public string GetRandomText(int difficulty = 0)
     {
         string text = "difficulty = " + difficulty;
-        Debug.Log(text);
         int maxRoll = 2;
         int minRoll = 0;
         switch (difficulty)

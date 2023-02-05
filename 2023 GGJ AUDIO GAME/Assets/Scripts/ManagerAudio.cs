@@ -10,16 +10,22 @@ public class ManagerAudio : MonoBehaviour
     AudioClip failSFX;
     [SerializeField]
     AudioClip inputSuccessSFX;
+    [SerializeField]
+    AudioClip philosopherJoined;
+
+    public void PlayPhilosopherSFX()
+    {
+        Debug.Log("acquired");
+        audioSource.PlayOneShot(philosopherJoined, 1f);
+    }
 
     public void PlaySuccessSFX()
     {
         audioSource.PlayOneShot(inputSuccessSFX, 1f);
-        Debug.Log("succ");
     }
 
     public void PlayFailSFX()
     {
-        Debug.Log("suck");
         audioSource.PlayOneShot(failSFX, volumeScale: 0.2f);
     }
 }

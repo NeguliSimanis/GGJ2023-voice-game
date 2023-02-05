@@ -148,8 +148,8 @@ public class Obstacle : MonoBehaviour
         {
             myAnimations.enabled = false;
             myText.color = Color.green;
-            GameManager.instance.currPlayer.AddPhilosopher(myPhilosopher);
-            GameManager.instance.AddPhilosopher(1);
+            if (GameManager.instance.AddPhilosopher(1))
+                GameManager.instance.currPlayer.AddPhilosopher(myPhilosopher);
             die = DieAfterSeconds(0.9f);
             StartCoroutine(die);
         }
@@ -158,8 +158,8 @@ public class Obstacle : MonoBehaviour
             audioText.color = Color.green;
             myText.enabled = false;
             myAnimations.enabled = false;
-            GameManager.instance.AddPhilosopher(1);
-            GameManager.instance.currPlayer.AddPhilosopher(myPhilosopher);
+            if (GameManager.instance.AddPhilosopher(1))
+                GameManager.instance.currPlayer.AddPhilosopher(myPhilosopher);
             die = DieAfterSeconds(0.9f);
             StartCoroutine(die);
         }
