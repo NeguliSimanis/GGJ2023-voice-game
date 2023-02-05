@@ -75,6 +75,8 @@ public class Texts : MonoBehaviour
         philosopherTexts.Add("Humanity", 1);
         philosopherTexts.Add("Religion", 1);
         philosopherTexts.Add("Theory", 1);
+        philosopherTexts.Add("Joy plants", 1);
+
 
         //
         philosopherTexts.Add("Ita vero", 2);

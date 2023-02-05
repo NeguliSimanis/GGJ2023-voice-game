@@ -175,10 +175,10 @@ public class Obstacle : MonoBehaviour
         isDead = true;
         IEnumerator die = DieAfterSeconds();
         myAnimations.ChangePhilosopher(Philosopher.Default);
-        if (death == ObstacleDeath.PunchedByPlayer ||
-            death == ObstacleDeath.RecruitedByPlayer)
+        //if (death == ObstacleDeath.PunchedByPlayer ||
+        //    death == ObstacleDeath.RecruitedByPlayer)
             canHurtPlayer = false;
-        else
+        if (death == ObstacleDeath.MissedByPlayer)
         {
             StartCoroutine(die);
             GameManager.instance.currPlayer.RemovePhilosopher();

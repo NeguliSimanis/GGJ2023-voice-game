@@ -22,6 +22,11 @@ public class Player : MonoBehaviour
     private void Start()
     {
         myFollowerAnimations.Add(myAnimations);
+        
+    }
+
+    public void InitializePlayer()
+    {
         myAnimations.Initialize();
     }
 
@@ -45,8 +50,11 @@ public class Player : MonoBehaviour
             newAnimations.Initialize();
             newAnimations.isPlayer = true;
 
-        if (followerCount > 0 && Time.time > lastRemoveTime + 1f)
+        if (followerCount > 0 && Time.time > lastAddTime + 2f)
+        {
+            lastAddTime = Time.time;
             GameManager.instance.managerCamera.ZoomOut();
+        }
     }
 
     public void RemovePhilosopher(bool removeFromFront = false)
@@ -71,17 +79,26 @@ public class Player : MonoBehaviour
             transform.position = new Vector3(transform.position.x - philoDistance, transform.position.y,
                transform.position.z);
         }
-        else
+        else if (myFollowerAnimations.Count >= 0)
         {
+
             PhilosopherAnimations animationToDelete = myFollowerAnimations[0];
             myFollowerAnimations.Remove(animationToDelete);
             Destroy(animationToDelete.gameObject);
-            transform.position = new Vector3(transform.position.x + philoDistance, transform.position.y,
-               transform.position.z);
+            transform.position = new Vector3(transform.position.x - philoDistance, transform.position.y,
+             transform.position.z);
+            foreach (PhilosopherAnimations philoAnim in myFollowerAnimations)
+            {
+                Transform philoTran = philoAnim.gameObject.transform;
+                philoTran.position =
+                    new Vector3(
+                        philoTran.position.x + philoDistance + philoDistance,
+                        philoTran.position.y,
+                        philoTran.position.z);
+            }
         }
         
-
-        if (followerCount >= 0 && Time.time > lastRemoveTime + 1.4f)
+        if (followerCount >= 0 && Time.time > lastRemoveTime + 2.4f)
         {
             lastRemoveTime = Time.time;
             GameManager.instance.managerCamera.ZoomIn();

@@ -6060,9 +6060,9 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  maxPlaytime: 1300
+  maxPlaytime: 3800
   minYears: -350
-  maxYears: 10000
+  maxYears: 20000
   difficulty: 0
   managerUI: {fileID: 0}
   managerCamera: {fileID: 0}
