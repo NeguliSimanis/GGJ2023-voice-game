@@ -20,7 +20,7 @@ public class PhilosopherAnimations : MonoBehaviour
 
     float deathTime;
     float birthTime;
-    float yearLength = 0.15f;
+    float yearLength = 0.16f;
     
     // ANIMATIONS
     public Philosopher philosopher;

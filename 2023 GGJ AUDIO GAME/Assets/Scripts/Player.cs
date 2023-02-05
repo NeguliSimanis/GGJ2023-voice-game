@@ -81,15 +81,23 @@ public class Player : MonoBehaviour
         }
         else if (myFollowerAnimations.Count >= 0)
         {
-            
+
             PhilosopherAnimations animationToDelete = myFollowerAnimations[0];
             myFollowerAnimations.Remove(animationToDelete);
             Destroy(animationToDelete.gameObject);
-            transform.position = new Vector3(transform.position.x + philoDistance, transform.position.y,
-               transform.position.z);
+            transform.position = new Vector3(transform.position.x - philoDistance, transform.position.y,
+             transform.position.z);
+            foreach (PhilosopherAnimations philoAnim in myFollowerAnimations)
+            {
+                Transform philoTran = philoAnim.gameObject.transform;
+                philoTran.position =
+                    new Vector3(
+                        philoTran.position.x + philoDistance + philoDistance,
+                        philoTran.position.y,
+                        philoTran.position.z);
+            }
         }
         
-
         if (followerCount >= 0 && Time.time > lastRemoveTime + 2.4f)
         {
             lastRemoveTime = Time.time;

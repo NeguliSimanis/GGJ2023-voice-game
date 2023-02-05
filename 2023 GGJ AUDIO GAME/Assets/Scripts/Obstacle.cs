@@ -127,9 +127,8 @@ public class Obstacle : MonoBehaviour
             if (canHurtPlayer &&
                 !hasInteractedWithPlayer && GameManager.instance.ProcessCollisionWithPhilosopher())
             {
-                //return;
-                //hasInteractedWithPlayer = true;
-                //ProcessDeath(ObstacleDeath.MissedByPlayer);
+                hasInteractedWithPlayer = true;
+                ProcessDeath(ObstacleDeath.MissedByPlayer);
             }
 
         }
