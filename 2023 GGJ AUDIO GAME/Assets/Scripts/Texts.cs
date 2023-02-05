@@ -40,10 +40,12 @@ public class Texts : MonoBehaviour
         philosopherTexts.Add("Zoom", 0);
         philosopherTexts.Add("Burden", 0);
         philosopherTexts.Add("Duty", 0);
+        philosopherTexts.Add("Roots", 0);
 
 
         //
         philosopherTexts.Add("Wealth", 1);
+        philosopherTexts.Add("Cringe", 1);
         philosopherTexts.Add("Universe", 1);
         philosopherTexts.Add("Hello World", 1);
         philosopherTexts.Add("Belief", 1);
@@ -68,6 +70,8 @@ public class Texts : MonoBehaviour
 
         //
         philosopherTexts.Add("Ita vero", 2);
+        philosopherTexts.Add("Panacea", 2);
+        philosopherTexts.Add("Pantheon", 2);
         philosopherTexts.Add("Perception", 2);
         philosopherTexts.Add("Pro bono", 2);
         philosopherTexts.Add("Education", 2);
@@ -83,10 +87,15 @@ public class Texts : MonoBehaviour
         philosopherTexts.Add("Philosophy", 2);
         philosopherTexts.Add("Ad Hominem", 2);
         philosopherTexts.Add("Ipso Facto", 2);
+        philosopherTexts.Add("Nauseous", 2);
+        philosopherTexts.Add("Minuscule", 2);
 
         //
         philosopherTexts.Add("Magum Opus", 3);
+        philosopherTexts.Add("Archeology", 3);
+        philosopherTexts.Add("Schizophrenia", 3);
         philosopherTexts.Add("Vox Populis", 3);
+        philosopherTexts.Add("encyclopedia", 3);
         philosopherTexts.Add("Cogito ergo sum", 3);
         philosopherTexts.Add("Curriculum vitae", 3);
         philosopherTexts.Add("Going back to my roots", 3);
