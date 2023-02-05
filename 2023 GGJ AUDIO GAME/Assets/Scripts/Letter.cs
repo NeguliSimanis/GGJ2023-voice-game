@@ -22,5 +22,6 @@ public class Letter : MonoBehaviour
     public void SetEmpty()
     {
         letterBackgroundImage.enabled = false;
+        this.letterText.text = "";
     }
 }

@@ -49,10 +49,15 @@ public class Texts : MonoBehaviour
         philosopherTexts.Add("Time", 0);
         philosopherTexts.Add("Love", 0);
         philosopherTexts.Add("Why", 0);
+        philosopherTexts.Add("Rule", 0);
+        philosopherTexts.Add("Law", 0);
+        philosopherTexts.Add("Logos", 0);
+        philosopherTexts.Add("Spirit", 0);
 
 
         //
         philosopherTexts.Add("Wealth", 1);
+        philosopherTexts.Add("Pathos", 1);
         philosopherTexts.Add("Pub fight", 1);
         philosopherTexts.Add("Cringe", 1);
         philosopherTexts.Add("Universe", 1);
@@ -80,6 +85,9 @@ public class Texts : MonoBehaviour
         philosopherTexts.Add("Theory", 1);
         philosopherTexts.Add("Joy plants", 1);
         philosopherTexts.Add("Essence", 1);
+        philosopherTexts.Add("Indict", 1);
+        philosopherTexts.Add("Wednesday", 1);
+        philosopherTexts.Add("Ingenious", 1);
 
 
         //
@@ -97,7 +105,7 @@ public class Texts : MonoBehaviour
         philosopherTexts.Add("Free will", 2);
         philosopherTexts.Add("Intellect", 2);
         philosopherTexts.Add("Reasoning", 2);
-        philosopherTexts.Add("Solopsism", 2);
+        philosopherTexts.Add("Solipsism", 2);
         philosopherTexts.Add("Experience", 2);
         philosopherTexts.Add("Motivation", 2);
         philosopherTexts.Add("Philosophy", 2);
@@ -105,6 +113,9 @@ public class Texts : MonoBehaviour
         philosopherTexts.Add("Ipso Facto", 2);
         philosopherTexts.Add("Nauseous", 2);
         philosopherTexts.Add("Minuscule", 2);
+        philosopherTexts.Add("Hypothesis", 2);
+        philosopherTexts.Add("Sacrilegious", 2);
+        philosopherTexts.Add("Mischievous", 2);
 
         //
         philosopherTexts.Add("Magum Opus", 3);
