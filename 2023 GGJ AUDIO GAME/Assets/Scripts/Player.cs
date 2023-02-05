@@ -23,10 +23,40 @@ public class Player : MonoBehaviour
     [SerializeField]
     GameObject graveStone;
 
+
+    private Dictionary<PhilosopherAnimations, Vector3> philosopherStartPositions = new Dictionary<PhilosopherAnimations, Vector3>();
+    private Dictionary<PhilosopherAnimations, Vector3> philosopherTargetPositions = new Dictionary<PhilosopherAnimations, Vector3>();
+    private Dictionary<PhilosopherAnimations, float> philosopherMoveTimers = new Dictionary<PhilosopherAnimations, float>();
+
     private void Start()
     {
         myFollowerAnimations.Add(myAnimations);
-        
+    }
+
+    public void Update()
+    {
+        foreach (PhilosopherAnimations philoAnim in myFollowerAnimations)
+        {
+            if (philosopherMoveTimers.ContainsKey(philoAnim))
+            {
+                Debug.Log("Moving philosopher");
+                philosopherMoveTimers[philoAnim] -= Time.deltaTime;
+                float progress = 1f - (philosopherMoveTimers[philoAnim] / 1f);
+
+                Vector3 startPos = philosopherStartPositions[philoAnim];
+                Vector3 targetPos = philosopherTargetPositions[philoAnim];
+                if (progress < 0)
+                {
+                    progress = 0;
+                    philosopherMoveTimers.Remove(philoAnim);
+                    philosopherStartPositions.Remove(philoAnim);
+                    philosopherTargetPositions.Remove(philoAnim);
+                }
+                Vector3 newPos = Vector3.Lerp(startPos, targetPos, progress);
+                Debug.Log("Pos: " + newPos.ToString());
+                philoAnim.gameObject.transform.position = newPos;
+            }
+        }
     }
 
     public void InitializePlayer()
@@ -72,13 +102,6 @@ public class Player : MonoBehaviour
 
         if (!removeFromFront && followerCount > 0)
         {
-            for (int i = 0; i < myFollowerAnimations.Count; i++)
-            {
-                myFollowerAnimations[i].transform.position = new Vector3(
-                    myFollowerAnimations[i].transform.position.x + philoDistance,
-                    myFollowerAnimations[i].transform.position.y,
-               myFollowerAnimations[i].transform.position.z);
-            }
             PhilosopherAnimations animationsToDelete = myFollowerAnimations[myFollowerAnimations.Count - 1];
             animationsToDelete.ChangePhilosopher(Philosopher.Default);
             myFollowerAnimations.Remove(animationsToDelete);
@@ -105,14 +128,20 @@ public class Player : MonoBehaviour
             Destroy(animationToDelete.gameObject);
             transform.position = new Vector3(transform.position.x - philoDistance, transform.position.y,
              transform.position.z);
+
+            Debug.Log("Remove");
             foreach (PhilosopherAnimations philoAnim in myFollowerAnimations)
             {
                 Transform philoTran = philoAnim.gameObject.transform;
-                philoTran.position =
-                    new Vector3(
-                        philoTran.position.x + philoDistance + philoDistance,
-                        philoTran.position.y,
-                        philoTran.position.z);
+
+                philosopherStartPositions[philoAnim] = philoAnim.transform.position;
+
+                philosopherTargetPositions[philoAnim] = new Vector3(
+                    philoTran.position.x - philoDistance,
+                    philoTran.position.y,
+                    philoTran.position.z);
+
+                philosopherMoveTimers[philoAnim] = 1f;
             }
         }
 
@@ -121,77 +150,5 @@ public class Player : MonoBehaviour
             lastRemoveTime = Time.time;
             GameManager.instance.managerCamera.ZoomIn();
         }
-        //IEnumerator remove = RemovePhilosopherAfterSeconds(0.2f, removeFromFront);
-        //StartCoroutine(remove);
     }
-
-    IEnumerator RemovePhilosopherAfterSeconds(float seconds, bool removeFromFront = false)
-    {
-        // new WaitForSeconds(seconds);
-        if (followerCount > 0)
-            followerCount--;
-        hasLostPhilos = true;
-
-        Vector3 gravePos = new Vector3(0, 0, 0);
-
-        if (!removeFromFront && followerCount > 0)
-        {
-            for (int i = 0; i < myFollowerAnimations.Count; i++)
-            {
-                myFollowerAnimations[i].transform.position = new Vector3(
-                    myFollowerAnimations[i].transform.position.x + philoDistance,
-                    myFollowerAnimations[i].transform.position.y,
-               myFollowerAnimations[i].transform.position.z);
-            }
-            PhilosopherAnimations animationsToDelete = myFollowerAnimations[myFollowerAnimations.Count - 1];
-            animationsToDelete.ChangePhilosopher(Philosopher.Default);
-            myFollowerAnimations.Remove(animationsToDelete);
-
-            //grave
-            gravePos = animationsToDelete.gameObject.transform.position;
-            GameObject newGrave = Instantiate(graveStone, animationsToDelete.transform);
-            newGrave.transform.parent = null;
-
-            Destroy(animationsToDelete.gameObject);
-
-            transform.position = new Vector3(transform.position.x - philoDistance, transform.position.y,
-               transform.position.z);
-        }
-        // removefrom front
-        else if (myFollowerAnimations.Count >= 0 && GameManager.instance.isGameStarted)
-        {
-
-            PhilosopherAnimations animationToDelete = myFollowerAnimations[0];
-            myFollowerAnimations.Remove(animationToDelete);
-            gravePos = animationToDelete.gameObject.transform.position;
-            GameObject newGrave = Instantiate(graveStone, animationToDelete.transform);
-            newGrave.transform.parent = null;
-            Destroy(animationToDelete.gameObject);
-            yield return new WaitForSeconds(seconds);
-            transform.position = new Vector3(transform.position.x - philoDistance, transform.position.y,
-             transform.position.z);
-            foreach (PhilosopherAnimations philoAnim in myFollowerAnimations)
-            {
-                Transform philoTran = philoAnim.gameObject.transform;
-                philoTran.position =
-                    new Vector3(
-                        philoTran.position.x + philoDistance + philoDistance,
-                        philoTran.position.y,
-                        philoTran.position.z);
-            }
-        }
-
-        if (followerCount >= 0 && Time.time > lastRemoveTime + 2.4f)
-        {
-            lastRemoveTime = Time.time;
-            GameManager.instance.managerCamera.ZoomIn();
-        }
-        yield return null;
-    }
-
-    //IEnumerator AddPhilosopherAfterSeconds(float seconds, Philosopher philosopher)
-    //{
-    //    yield return null;
-        
-    //}
 }
