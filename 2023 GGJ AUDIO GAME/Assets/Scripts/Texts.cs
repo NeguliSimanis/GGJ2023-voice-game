@@ -41,10 +41,16 @@ public class Texts : MonoBehaviour
         philosopherTexts.Add("Burden", 0);
         philosopherTexts.Add("Duty", 0);
         philosopherTexts.Add("Roots", 0);
+        philosopherTexts.Add("Fate", 0);
+        philosopherTexts.Add("Word", 0);
+        philosopherTexts.Add("Arm", 0);
+        philosopherTexts.Add("Zen", 0);
+        philosopherTexts.Add("Time", 0);
 
 
         //
         philosopherTexts.Add("Wealth", 1);
+        philosopherTexts.Add("Pub fight", 1);
         philosopherTexts.Add("Cringe", 1);
         philosopherTexts.Add("Universe", 1);
         philosopherTexts.Add("Hello World", 1);
@@ -67,9 +73,13 @@ public class Texts : MonoBehaviour
         philosopherTexts.Add("Stoicism", 1);
         philosopherTexts.Add("Humanism", 1);
         philosopherTexts.Add("Humanity", 1);
+        philosopherTexts.Add("Religion", 1);
+        philosopherTexts.Add("Theory", 1);
 
         //
         philosopherTexts.Add("Ita vero", 2);
+        philosopherTexts.Add("Easter egg", 2);
+        philosopherTexts.Add("Determinism", 2);
         philosopherTexts.Add("Panacea", 2);
         philosopherTexts.Add("Pantheon", 2);
         philosopherTexts.Add("Perception", 2);

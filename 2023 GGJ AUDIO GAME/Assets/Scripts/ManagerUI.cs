@@ -36,6 +36,7 @@ public class ManagerUI : MonoBehaviour
 
     public void StartGame()
     {
+        GameManager.instance.managerAudio.PlaySuccessSFX();
         mainMenu.SetActive(false);
         GameManager.instance.StartGame();
 
@@ -43,6 +44,7 @@ public class ManagerUI : MonoBehaviour
 
     public void RestartGame()
     {
+        GameManager.instance.managerAudio.PlaySuccessSFX();
         GameManager.instance.RestartGame();
     }
 

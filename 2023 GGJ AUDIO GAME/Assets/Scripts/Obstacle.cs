@@ -56,6 +56,13 @@ public class Obstacle : MonoBehaviour
     {
         player = GameManager.instance.currPlayer;
         myText.text = GameManager.instance.texts.GetRandomText(difficulty: GameManager.instance.difficulty).ToUpper();
+        int myLength = myText.text.Length;
+        if (myLength > 6)
+            speed *= 0.8f;
+        if (myLength > 8)
+            speed *= 0.9f;
+        if (myLength > 10)
+            speed *= 0.86f;
         InitializeEnemy();
     }
 
