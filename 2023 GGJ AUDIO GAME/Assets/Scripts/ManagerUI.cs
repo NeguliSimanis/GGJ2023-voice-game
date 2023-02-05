@@ -58,8 +58,21 @@ public class ManagerUI : MonoBehaviour
 
     public void UpdateYearText()
     {
-        string affix = GameManager.instance.GetCurrentYear() > 0 ? "AD" : "BC";
-        yearText.text = GameManager.instance.GetCurrentYear().ToString("#0") + affix;
+        string affix = GameManager.instance.GetCurrentYear() > 0 ? " AD" : " BC";
+        string year = GameManager.instance.GetCurrentYear().ToString("#0");
+        string firstLetter = "" + year[0];
+        if (firstLetter=="-")
+        {
+            string temp = year;
+            year = "";
+            string minus = "-";
+            foreach (char c in temp)
+            {
+                if (c != minus[0])
+                    year += c;
+            }
+        }
+        yearText.text = year + affix;
     }
 }
 
