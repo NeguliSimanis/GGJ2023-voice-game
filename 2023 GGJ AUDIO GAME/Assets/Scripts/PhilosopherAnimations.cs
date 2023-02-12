@@ -69,7 +69,7 @@ public class PhilosopherAnimations : MonoBehaviour
         if (!playerInitialized)
             return;
         //Debug.Log(GameManager.instance.GetCurrentYear() + " ? " + deathYear);
-        if (Time.time > deathTime)
+        if (myAge > maxAge)
         {
             isDead = true;
             Debug.Log(gameObject + " MUST DIE!");
@@ -84,6 +84,10 @@ public class PhilosopherAnimations : MonoBehaviour
     private void SetCurrAge()
     {
         float temp = (Time.time - birthTime) / yearLength;
+        if (GameManager.instance.difficulty == 0)
+            temp *= 1.4f;
+        else if (GameManager.instance.difficulty == 2)
+            temp *= 1.3f;
         myAge = (int)temp + 1;
 
         if (myAge > 80)

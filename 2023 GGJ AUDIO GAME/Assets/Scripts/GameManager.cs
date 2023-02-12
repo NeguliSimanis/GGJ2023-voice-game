@@ -29,6 +29,7 @@ public class GameManager : MonoBehaviour
 
     // BACKGROUND SPEED
     public float speedMultiplierPerSecond;
+    private float speedIncreaseInterval;
     public float currSpeedMultiplier;
     public float maxSpeedMultiplier;
     public float lastSpeedUpdate;
@@ -36,8 +37,8 @@ public class GameManager : MonoBehaviour
     // Enemy spawning
     [Header("enemy")]
     public GameObject enemy1;
-    private float minEnemySpawnCooldown = 1.2f;
-    private float maxEnemySpawnCooldown = 2.6f;
+    private float minEnemySpawnCooldown = 2.1f;
+    private float maxEnemySpawnCooldown = 2.9f;
     private float lastEnemySpawnTime = 0;
     private float nextEnemySpawnTime;
     private float enemySpawnPosX = 8f;
@@ -68,33 +69,39 @@ public class GameManager : MonoBehaviour
 
     public void StartGame()
     {
-        currPlayer = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
-        GameObject otherManagers = GameObject.FindGameObjectWithTag("ManagerOther");
-        managerUI = otherManagers.GetComponent<ManagerUI>();
-        managerCamera = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<ManagerCamera>();
+        GetComponents();
+        ResetStats();
+        ResetStats();
+        SetupPlayer();
+    }
 
-        // RESET STATS
-        speedMultiplierPerSecond = 0.0005f;
+    private void ResetStats()
+    {
+        speedMultiplierPerSecond = 0.024f;
+        speedIncreaseInterval = 0.5f;
         currSpeedMultiplier = 1f;
-        maxSpeedMultiplier = 6.2f;
-        lastSpeedUpdate = 0;
-
+        maxSpeedMultiplier = 7.6f;
         isGameOver = false;
         isGameStarted = true;
         nextEnemySpawnTime = Time.time;
         lastSpeedUpdate = Time.time;
         currPhilosphers = 1;
-
-
         enemies.Clear();
         difficulty = 0;
         playtime = 0;
+    }
 
-        // player
+    private void GetComponents()
+    {
+        currPlayer = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
+        GameObject otherManagers = GameObject.FindGameObjectWithTag("ManagerOther");
+        managerUI = otherManagers.GetComponent<ManagerUI>();
+        managerCamera = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<ManagerCamera>();
+    }
+
+    private void SetupPlayer()
+    {
         currPlayer.InitializePlayer();
-        currPlayer.myAnimations.myAge = 1;
-        currPlayer.myAnimations.birthYear = (int)GameManager.instance.GetCurrentYear();
-        currPlayer.myAnimations.deathYear = currPlayer.myAnimations.birthYear + currPlayer.myAnimations.maxAge;
     }
 
 
@@ -136,6 +143,7 @@ public class GameManager : MonoBehaviour
     public void GameOver()
     {
         isGameOver = true;
+        managerAudio.SetBackgroundMusic(resetInstruments: true);
         managerUI.ShowGameOverScreen();
     }
 
@@ -144,6 +152,7 @@ public class GameManager : MonoBehaviour
         ListenToShortcuts();
         if (isGameOver)
             return;
+       
         ManageGameSpeed();
         ManageEnemySpawning();
         UpdatePlaytime();
@@ -192,8 +201,9 @@ public class GameManager : MonoBehaviour
     private void ManageGameSpeed()
     {
         if (currSpeedMultiplier < maxSpeedMultiplier &&
-           lastSpeedUpdate + 1 > Time.time)
+           lastSpeedUpdate + speedIncreaseInterval < Time.time)
         {
+            Debug.Log(currSpeedMultiplier);
             currSpeedMultiplier += speedMultiplierPerSecond;
             lastSpeedUpdate = Time.time;
         }
@@ -208,8 +218,16 @@ public class GameManager : MonoBehaviour
 
     private void UpdatePlaytime()
     {
-
-        this.playtime += Time.deltaTime;
+        float multiplier = 1f;
+        if (difficulty == 0)
+            multiplier = 2f;
+        else if (difficulty == 1)
+            multiplier = 0.8f;
+        else if (difficulty == 2)
+            multiplier = 0.2f;
+        else
+            multiplier = 1;
+        this.playtime += (Time.deltaTime*multiplier);
         managerUI.UpdateYearText();
     }
 
@@ -334,14 +352,28 @@ public class GameManager : MonoBehaviour
         }
         else if (year < thomasEndYear)
         {
+            if (difficulty == 0)
+            {
+                managerAudio.SetBackgroundMusic();
+            }
             difficulty = 1;
         }
         else if (year < GameManager.instance.decartesEndYear)
         {
+            if (difficulty == 1)
+            {
+                managerAudio.SetBackgroundMusic();
+                managerAudio.SetBackgroundMusic();
+            }
             difficulty = 2;
         }
         else
         {
+            if (difficulty == 2)
+            {
+                managerAudio.SetBackgroundMusic();
+                managerAudio.SetBackgroundMusic();
+            }
             difficulty = 3;
         }
     }

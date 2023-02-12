@@ -60,3 +60,8 @@ crashlytics-build.properties
 
 *.dwlt
 *.dwlt
+*.meta
+*.config
+*.dll
+*.meta
+*.meta

@@ -157,7 +157,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isPlayer: 0
   myAge: 1
-  maxAge: 110
+  maxAge: 101
   ageText: {fileID: 2263717654140712395}
   birthYear: 0
   deathYear: 0

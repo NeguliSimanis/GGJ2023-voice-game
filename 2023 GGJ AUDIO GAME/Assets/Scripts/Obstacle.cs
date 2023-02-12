@@ -190,7 +190,7 @@ public class Obstacle : MonoBehaviour
             myText.color = Color.green;
             if (GameManager.instance.AddPhilosopher(1))
                 GameManager.instance.currPlayer.AddPhilosopher(myPhilosopher);
-            die = DieAfterSeconds(0.9f);
+            die = DieAfterSeconds(0.2f);
             StartCoroutine(die);
         }
         else if (death == ObstacleDeath.RecruitedByPlayer)
@@ -200,7 +200,7 @@ public class Obstacle : MonoBehaviour
             myAnimations.enabled = false;
             if (GameManager.instance.AddPhilosopher(1))
                 GameManager.instance.currPlayer.AddPhilosopher(myPhilosopher);
-            die = DieAfterSeconds(0.9f);
+            die = DieAfterSeconds(0.2f);
             StartCoroutine(die);
         }
     }

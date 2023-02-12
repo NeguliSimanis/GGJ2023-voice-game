@@ -64,6 +64,8 @@ public class ManagerUI : MonoBehaviour
 
     public void UpdateYearText()
     {
+        //yearText.text = GameManager.instance.currSpeedMultiplier.ToString();
+        //return;
         string affix = GameManager.instance.GetCurrentYear() > 0 ? " AD" : " BC";
         string year = GameManager.instance.GetCurrentYear().ToString("#0");
         string firstLetter = "" + year[0];
